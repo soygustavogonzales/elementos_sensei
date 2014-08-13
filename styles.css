@@ -1,0 +1,58 @@
+	*{
+		margin: 0;
+		border:0;
+		padding: 0;
+	}
+	body{
+		position: relative;
+  background-color: #000;
+		color: white;
+	}
+		canvas:first-child{
+			background: rgba(0,0,0,0);
+			opacity: .1;
+			position: absolute;
+			z-index: 1;
+		}
+		#caja{
+			position: absolute;
+			z-index: 2;
+		}
+
+		.controls{
+			position: relative;
+		}
+		#blackboard{
+  	display: block;
+			background: transparent;
+			//background: #eee;
+			position: relative;
+			border:0px dotted #444;
+		}
+		.aviso{
+			background: white;
+			color: #333;
+			height: auto;
+			width: 300px;
+			border-radius: .1em;
+			padding: .3em;
+			font-family: 'Georgia' sans-serif arial;
+			font-size: 1.2em;
+			position: absolute;
+			top: 50px;
+			left: 300px;
+		}
+		.form-control{
+			padding: .6em .5em;
+			border-radius:.2em;
+		}
+		input[type=number]{
+			width: 2em;
+		}
+		input[type=color]{
+			box-sizing:border-box;
+			padding: .1em 0;
+		}
+		#wrap{
+			padding: 0em;
+		}

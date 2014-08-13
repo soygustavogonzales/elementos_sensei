@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../../bower_components/raphael/raphael-min.js"></script>
+	<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+	<!-- 
+	 <script src="raphael.dragAndDrop.js"></script>
+	 -->
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="wrap">
+	<div id="caja"></div>
+</div>
+	<canvas id="blackboard" class="pizarra" width="1200" height="560"></canvas>
+	<div class="controls">
+		<button id="change" class="form-control">Mover pizarra</button>
+		<button class="form-control rectangle">crear rectangulo</button>
+		<button class="form-control cuadrade">crear cuadrado</button>
+		<button class="form-control circule">crear circulo</button>
+		<button class="form-control eliminar">eliminar</button>
+		<br>
+		<label for="ancho">ancho</label>
+		<input class="form-control ancho" type="range" min="5" max="500" name="ancho">
+		<label for="alto">alto</label>
+		<input class="form-control alto" type="range" min="5" max="500" name="alto">
+		<label for="rotate">rotate</label>
+		<input class="form-control rotate" type="range" value="0" min="0" max="360" name="rotate">
+		<label for="translatex">translatex</label>
+		<input class="form-control translatex" type="range" value="0" min="0" max="1000" name="translatex">
+		<label for="translatey">translatey</label>
+		<input class="form-control translatey" type="range" value="0" min="0" max="560" name="translatey">
+		<label for="color">color</label>
+		<input class="form-control color" type="color" value="#f03737" name="color">
+	</div>
+<div class="aviso">***</div>
+	<!-- 
+	 <canvas id="blackboard" width="1200" height="560"></canvas>
+	 -->
+	<script src="script.js"></script>
+	<script src="pizarra.js"></script>
+</body>
+</html>
