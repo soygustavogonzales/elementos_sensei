@@ -1,98 +1,63 @@
-		var paper = Raphael('caja', 1200, 560);
-        paper.rect(0,0,1200,560).attr({
-        	fill: 'rgba(0,0,0,0)'
-        });
-  var set = paper.set();
-
-
-		var $btnCrearRect = $('.rectangle'),
+		var paper = Raphael('caja', 1200, 560),
+  set = paper.set(),
+	 $btnCrearRect = $('.rectangle'),
 		$rotate = $('.rotate'),
 		$translatex = $('.translatex'),
 		$translatey = $('.translatey'),
 		$ancho = $('.ancho'),
 		$alto = $('.alto'),
 		$eliminar = $('.eliminar'),
-		svg_ = document.getElementsByTagName('svg')[0]
-		;
-
-		svg_.onclick = function(e){
-			console.log(e.x + " , "+e.y)
+		$btnMoverPizarra = $('#change'),
+		$pizarra = $('.pizarra'),
+		$btnCrearCircle = $('.circule'),
+		$btnCrearRaya = $('.raya'),
+		$btnCrearTexto = $('.texto'),
+		$btnCambiarTexto = $('.ctexto'),
+		$parrafo = $('.parrafo'),
+		elActual = null,
+		svg_ = document.getElementsByTagName('svg')[0];
+		
+		var mover = !true;
+		var ele;
+		svg_.onmousedown = function(e){
+			//sconsole.log(e.x + " , "+e.y)
+			ele = paper.getElementByPoint(e.x,e.y);
+			elActual = ele
+			mover = !mover
+			console.log(ele)
 		}
+
+		svg_.onmouseup = function(e){
+			mover = !mover
+		}
+
 		svg_.onmousemove = function(e){
-			console.log(e.x + " , "+e.y)
-			if(elActual){
-				var deegre = $rotate.val(),
-				x = $translatex.val()
-				y = $translatey.val();
-				elActual.transform("t"+e.x+","+e.y+"r"+deegre)
+			//console.log(e.x + " , "+e.y)
+			if(ele&&mover){
+				var deegre = ele._['deg'];
+				ele.transform("t"+(e.x)+","+(e.y)+"r"+deegre)
 			}
 		}
-		
-    /*
-        cuadrado = paper.rect(10, 15, 64, 64, 4).attr({fill: 'pink'}),
-        rectangulo = paper.rect(30, 35, 100, 64).attr({fill: 'pink'}),
-        circulo = paper.circle(150, 48, 32).attr({fill: 'lightblue'});
-    */
-    
-   /*
-    set.push(cuadrado,circulo,rectangulo)
-       .draggable();
 
-	    	var watchElements = function(){
 
-	       var move = function(dx, dy, mx, my, ev) {
-	            // Get mouse X/Y (relative to SVG/VML canvas)
-	            var ox = this.ox, oy = this.oy;
-	            console.log(ox+" : "+oy)
-	            var offset = $(this.paper.canvas).parent().offset(),
-	                px = mx - offset.left,
-	                py = my - offset.top;
-	    
-	            $('.aviso').html([
-	                'Drag Move: (Canvas offset relative to HTML doc): ' + 
-	                    [offset.left, offset.top].join(', '),
-	                'Distance XY: ' + [dx, dy].join(', '),
-	                'Document XY: ' + [mx, my].join(', '),
-	                'Canvas XY: ' + [px, py].join(', ')
-	                ].join('<br>'));
-	    
-	        },
-	        start = function() { 
-	        		  var ox = this.ox, oy = this.oy;
-	            console.log(ox+" : "+oy)
-	        	//$('.aviso').html('Drag Start');
-	        },
-	        end = function() { 
-	        		  var ox = this.ox, oy = this.oy;
-	            console.log(ox+" : "+oy)
-	        	//$('.aviso').html('Drag End');
-	         };
-	    
-	    			set.drag(move, start, end);
-	    	}
-	    	watchElements();
-   */
-	var btnMoverPizarra = $('#change');
-	var pizarra = $('.pizarra')
+	$pizarra.ubicacion = "atras"
 
-	pizarra.ubicacion = "atras"
-
-	btnMoverPizarra.click(function(event) {
-		console.log(pizarra)
-		if(pizarra.ubicacion == "atras"){
-			pizarra.css({
+	$btnMoverPizarra.click(function(event) {
+		console.log($pizarra)
+		if($pizarra.ubicacion == "atras"){
+			$pizarra.css({
 				'z-index':'2'
 			})
-			pizarra.ubicacion = "adelante"
+			$pizarra.ubicacion = "adelante"
 		}
 		else{
-				pizarra.css({
+				$pizarra.css({
 				'z-index':'1'
 			})
-			pizarra.ubicacion = "atras"
+			$pizarra.ubicacion = "atras"
 		}
 	});
-		var elActual = null;
+
 		function crearRectangulo (opt){
 				var default_ = {
 					x : 0,//posicion en el eje x
@@ -108,7 +73,7 @@
 
     var newCuadrado = paper.rect(opt.x, opt.y, opt.width, opt.height,opt.punta).
     attr({fill: opt.color}).
-    click(function(e){
+    mouseup(function(e){
     		console.log(this)
     		console.log(this._)
     	if(this._['bboxwt']&&this._['bboxwt'].toString){
@@ -118,7 +83,7 @@
     		console.log(this._['bboxwt'])
 
     	//console.log(this._.bboxwt.x +" , "+this._.bboxwt.x)
-    	elActual = this;
+    	//elActual = this;
     	//console.log(e)
     	var datos = elActual.getBBox(false);
 					//console.log(datos)
@@ -155,13 +120,95 @@
 	   // watchElements();
 		}
 
-		function eliminarElemento (){
-			console.log("removiendo...")
-			paper.clear()
+		function crearRaya (opt) {
+			var default_ = {
+				points:["0,0","50,50"],
+				ancho:3
+			}
+				opt = $.extend(default_,opt)
+				var path = "", l = opt.points.length-1;
+				$.each(opt.points, function(index, val) {
+					if(index!=l)
+					 path+="M"+val//path.concat("M"+val)
+					else
+						path+="L"+val
+				});
+
+				var newLine = paper.path(path).
+				attr({
+					"stroke-width":opt.ancho
+					,title:"linea"
+				}).
+				hover(function(){
+					this.attr({
+						cursor:"pointer"
+					})
+				})
+				//.transform("s5")
 		}
 
+		function crearTexto (opt) {
+			var default_ = {
+				texto : "{ }"
+			}
+			opt = $.extend(default_,opt)
+			var newText = paper.text(20,20,opt.texto)
+			.attr({
+				'font-size':20,
+			})
+			.hover(function(){
+				this.attr({
+					cursor:"pointer"
+				})
+			})
+		}
+		function crearCirculo(opt) {
+				var default_ = {
+					x : 0,//posicion en el eje x
+					y : 0,//posicion en el eje y
+					r: 5,//anchura
+					color:"rgba(0,0,0,0)"//color de fondo
+				}
+				opt = $.extend(default_,opt)
+				var newCirculo = paper.circle(opt.x,opt.y,opt.r).
+				attr({
+					fill:opt.color
+				})
+				.hover(function(){
+					this.attr({
+						cursor:"pointer"
+					})
+				})
+		}
 
-		
+		function eliminarElemento (){
+			console.log("removiendo...")
+			elActual.remove()
+		}
+		$btnCambiarTexto.click(function(event) {
+			elActual.attr({
+				text:$parrafo.val()
+			})
+		});
+		$btnCrearTexto.click(function(event) {
+			var texto = $parrafo.val();
+			crearTexto({
+				texto:texto
+			})
+		});
+
+		$btnCrearRaya.click(function(event) {
+			crearRaya({
+				points:["0,0","20,150"]
+			})
+		});
+		$btnCrearCircle.click(function(event) {
+			crearCirculo({
+				x:0,
+				y:0,
+				r:100
+			})
+		});
 		$btnCrearRect.click(function(event) {
 			var ancho = parseInt($('.ancho').val()),
 			alto = parseInt($('.alto').val()),
@@ -170,7 +217,7 @@
 				container:paper,
 				width:ancho,
 				height:alto,
-				color:color
+				color:"rgba(0,0,0,0)"
 			}
 
 			crearRectangulo(opt)
@@ -182,28 +229,30 @@
 		});
 
 		$rotate.change(function(event) {
+   var datos = elActual.getBBox(false);
+   console.log(datos.x +" : "+datos.y+ ", deg:"+elActual._['deg'])
 			var deegre = $rotate.val();
-			var x = $translatex.val()
+			var x = $translatex.val(),
 			y = $translatey.val();
-			console.log("cambio de valor: " + deegre)
-			console.log(elActual)
 			elActual.transform("t"+x+","+y+"r"+deegre)
 		});
 
 		$translatex.change(function(event) {
+   var datos = elActual.getBBox(false);
+   console.log(datos.x +" : "+datos.y+ ", deg:"+elActual._['deg'])
 			var deegre = $rotate.val();
-			var x = $translatex.val()
+			var x = $translatex.val(),
 			y = $translatey.val();
 			elActual.transform("t"+x+","+y+"r"+deegre)
-			
 		});
 
 		$translatey.change(function(event) {
+   var datos = elActual.getBBox(false);
+   console.log(datos.x +" : "+datos.y+ ", deg:"+elActual._['deg'])
 			var deegre = $rotate.val();
-			var x = $translatex.val()
+			var x = $translatex.val(),
 			y = $translatey.val();
 			elActual.transform("t"+x+","+y+"r"+deegre)
-			
 		});
 
 		$alto.change(function(event) {
