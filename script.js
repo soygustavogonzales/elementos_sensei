@@ -6,6 +6,7 @@
 		$translatey = $('.translatey'),
 		$ancho = $('.ancho'),
 		$alto = $('.alto'),
+		$escala = $('.escala'),
 		$eliminar = $('.eliminar'),
 		$btnMoverPizarra = $('#change'),
 		$pizarra = $('.pizarra'),
@@ -15,7 +16,101 @@
 		$btnCambiarTexto = $('.ctexto'),
 		$parrafo = $('.parrafo'),
 		elActual = null,
+		actual = null,ant = null,
 		svg_ = document.getElementsByTagName('svg')[0];
+
+		Raphael.el.setCustomAttributes = function() {
+			var tipoEle = this.node.tagName;
+			switch(tipoEle){
+				case'text':
+					ctmAttrs = {
+						'font-size':20
+					}
+				break;
+				case'rect':
+					ctmAttrs = {
+						fill:"rgba(0,0,0,0)"				
+					}
+				break;
+				case'circle':
+				ctmAttrs = {
+						fill:"rgba(0,0,0,0)"				
+				}
+				break;
+				case'path':
+				ctmAttrs = {
+					"stroke-width":2
+					,title:"linea"
+				}
+				break;
+			}
+
+			this.mouseup(function(e){
+    		console.log(this)
+    		console.log(this._)
+    	if(this._['bboxwt']&&this._['bboxwt'].toString){
+    		console.log(this._['bboxwt'])
+    	}
+    	else
+    		console.log(this._['bboxwt'])
+
+    	//console.log(this._.bboxwt.x +" , "+this._.bboxwt.x)
+    	//elActual = this;
+    	//console.log(e)
+    	var datos = elActual.getBBox(false);
+					//console.log(datos)
+					console.log(datos.x+" , "+datos.y)
+
+					$alto.val(this.height)
+					$ancho.val(this.width)
+					$translatex.val(datos.x)
+					$translatey.val(datos.y)
+					if(this._&&this._['deg']!=undefined&&this._['sx']!=undefined){
+						$rotate.val(this._['deg'])
+						$escala.val(this._['sx'])
+					}
+
+
+					console.log(
+							$alto.val()+", "+
+							$ancho.val()+", "+
+							$translatex.val()+", "+
+							$translatey.val()+", "+
+							$rotate.val()+", "+
+							$escala.val()
+					)
+
+					if(actual){
+						ant = actual
+						actual = this
+						console.group("actual")
+							console.log(actual)
+							console.log(ant)
+						console.groupEnd("actual")
+						actual.attr({
+							stroke:"red"
+						})
+						ant.attr({
+							stroke:"black"
+						})
+					}else{
+						actual = this
+						console.group("actual else")
+							console.log(actual)
+						console.groupEnd("actual")
+							actual.attr({
+								stroke:"red"
+							})
+					}
+    })
+
+			this.hover(function(){
+				this.attr({
+					cursor:"pointer"
+				})
+			})
+			this.attr(ctmAttrs)
+		}
 		
 		var mover = !true;
 		var ele;
@@ -34,8 +129,9 @@
 		svg_.onmousemove = function(e){
 			//console.log(e.x + " , "+e.y)
 			if(ele&&mover){
-				var deegre = ele._['deg'];
-				ele.transform("t"+(e.x)+","+(e.y)+"r"+deegre)
+				var deegre = ele._['deg'],
+				scale = ele._['sx'];
+				ele.transform("t"+(e.x)+","+(e.y)+"r"+deegre+"s"+scale)
 			}
 		}
 
@@ -70,52 +166,9 @@
 
 				opt = $.extend(default_, opt);
 				//console.log(opt)
-
-    var newCuadrado = paper.rect(opt.x, opt.y, opt.width, opt.height,opt.punta).
-    attr({fill: opt.color}).
-    mouseup(function(e){
-    		console.log(this)
-    		console.log(this._)
-    	if(this._['bboxwt']&&this._['bboxwt'].toString){
-    		console.log(this._['bboxwt'])
-    	}
-    	else
-    		console.log(this._['bboxwt'])
-
-    	//console.log(this._.bboxwt.x +" , "+this._.bboxwt.x)
-    	//elActual = this;
-    	//console.log(e)
-    	var datos = elActual.getBBox(false);
-					//console.log(datos)
-					console.log(datos.x+" , "+datos.y)
-
-					$alto.val(this.height)
-					$ancho.val(this.width)
-					$translatex.val(datos.x)
-					$translatey.val(datos.y)
-					if(this._&&this._['deg']!=undefined){
-						$rotate.val(this._['deg'])
-						console.log("deg es: "+ this._['deg'])
-					}else{
-						console.log(this._['deg'])
-					}
-
-
-					console.log(
-							$alto.val()+", "+
-							$ancho.val()+", "+
-							$translatex.val()+", "+
-							$translatey.val()+", "+
-							$rotate.val()
-					)
-
-    })
-    .hover(function() {
-    	this.attr({
-    		cursor:"pointer"
-    	})
-    });
-			 set.push(newCuadrado)  
+    var newCuadrado = paper.rect(opt.x, opt.y, opt.width, opt.height,opt.punta)
+    .setCustomAttributes()
+			 //set.push(newCuadrado)  
     //.draggable(); 
 	   // watchElements();
 		}
@@ -134,16 +187,8 @@
 						path+="L"+val
 				});
 
-				var newLine = paper.path(path).
-				attr({
-					"stroke-width":opt.ancho
-					,title:"linea"
-				}).
-				hover(function(){
-					this.attr({
-						cursor:"pointer"
-					})
-				})
+				var newLine = paper.path(path)
+				.setCustomAttributes()
 				//.transform("s5")
 		}
 
@@ -153,14 +198,7 @@
 			}
 			opt = $.extend(default_,opt)
 			var newText = paper.text(20,20,opt.texto)
-			.attr({
-				'font-size':20,
-			})
-			.hover(function(){
-				this.attr({
-					cursor:"pointer"
-				})
-			})
+			.setCustomAttributes()
 		}
 		function crearCirculo(opt) {
 				var default_ = {
@@ -170,15 +208,8 @@
 					color:"rgba(0,0,0,0)"//color de fondo
 				}
 				opt = $.extend(default_,opt)
-				var newCirculo = paper.circle(opt.x,opt.y,opt.r).
-				attr({
-					fill:opt.color
-				})
-				.hover(function(){
-					this.attr({
-						cursor:"pointer"
-					})
-				})
+				var newCirculo = paper.circle(opt.x,opt.y,opt.r)
+				.setCustomAttributes()
 		}
 
 		function eliminarElemento (){
@@ -206,7 +237,7 @@
 			crearCirculo({
 				x:0,
 				y:0,
-				r:100
+				r:10
 			})
 		});
 		$btnCrearRect.click(function(event) {
@@ -228,31 +259,32 @@
 			eliminarElemento()
 		});
 
-		$rotate.change(function(event) {
+		function transformar() {
    var datos = elActual.getBBox(false);
    console.log(datos.x +" : "+datos.y+ ", deg:"+elActual._['deg'])
-			var deegre = $rotate.val();
-			var x = $translatex.val(),
-			y = $translatey.val();
-			elActual.transform("t"+x+","+y+"r"+deegre)
+			var deegre = $rotate.val(),
+			x = $translatex.val(),
+			y = $translatey.val(),
+			scale = 1+(parseInt($escala.val())/10)
+			elActual.transform("t"+x+","+y+"r"+deegre+"s"+scale)			
+		}
+
+		$rotate.change(function(event) {
+			transformar()
 		});
 
 		$translatex.change(function(event) {
-   var datos = elActual.getBBox(false);
-   console.log(datos.x +" : "+datos.y+ ", deg:"+elActual._['deg'])
-			var deegre = $rotate.val();
-			var x = $translatex.val(),
-			y = $translatey.val();
-			elActual.transform("t"+x+","+y+"r"+deegre)
+			transformar()
 		});
 
 		$translatey.change(function(event) {
-   var datos = elActual.getBBox(false);
-   console.log(datos.x +" : "+datos.y+ ", deg:"+elActual._['deg'])
-			var deegre = $rotate.val();
-			var x = $translatex.val(),
-			y = $translatey.val();
-			elActual.transform("t"+x+","+y+"r"+deegre)
+			transformar()
+		});
+
+		$escala.change(function(event) {
+
+		transformar()
+
 		});
 
 		$alto.change(function(event) {
@@ -260,6 +292,7 @@
 				height:$alto.val()
 			})
 		});
+
 
 		$ancho.change(function(event) {
 			elActual.attr({

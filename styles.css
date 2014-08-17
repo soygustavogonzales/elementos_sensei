@@ -6,7 +6,7 @@
 	body{
 		position: relative;
   background-color: #F2F1F0;
-		color: white;
+		color: black;
 	}
 		canvas:first-child{
 			background: rgba(0,0,0,0);
