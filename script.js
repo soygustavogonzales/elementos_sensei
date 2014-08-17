@@ -15,6 +15,7 @@
 		$btnCrearTexto = $('.texto'),
 		$btnCambiarTexto = $('.ctexto'),
 		$parrafo = $('.parrafo'),
+		$btnCrearForma = $('.cforma'),
 		elActual = null,
 		actual = null,ant = null,
 		svg_ = document.getElementsByTagName('svg')[0];
@@ -106,9 +107,10 @@
 
 			this.hover(function(){
 				this.attr({
-					cursor:"pointer"
+					cursor:"move"
 				})
 			})
+
 			this.attr(ctmAttrs)
 		}
 		
@@ -181,15 +183,72 @@
 				opt = $.extend(default_,opt)
 				var path = "", l = opt.points.length-1;
 				$.each(opt.points, function(index, val) {
-					if(index!=l)
+					console.log(val)
+					if(index==0)
 					 path+="M"+val//path.concat("M"+val)
-					else
+					else if(index>0)
 						path+="L"+val
 				});
-
+				//path+="Z"
+				console.log(path)
 				var newLine = paper.path(path)
 				.setCustomAttributes()
 				//.transform("s5")
+		}
+
+		function crearPts() {
+			var $svg_ = $(svg_),
+			ruta = 1,
+			set = paper.set();
+
+			$svg_.css({
+				cursor:"crosshair"
+			})
+			var arrayPtos = [],iniciar = true;
+				$svg_.click(function(event) {
+					if(iniciar){
+							console.log(event.originalEvent)
+							var x = event.originalEvent.x, y = event.originalEvent.y,
+							ptoAnt = paper.getElementByPoint(x,y),
+							ptoNuevo = x+","+y;
+							console.log(ptoNuevo)
+							if(ptoAnt){
+								console.log(ptoAnt.data('ruta'))
+								if(ptoAnt.data('ruta')==ruta)
+									console.log("misma ruta")
+									console.log(ptoAnt?true:false)
+									console.log(ptoAnt.data('ruta')?true:false)
+									console.log((ptoAnt.data('ruta')==ruta)?true:false)
+
+									console.log((ptoAnt&&ptoAnt.data('ruta')&&(ptoAnt.data('ruta')==ruta))?true:false)
+							}
+							if(ptoAnt&&ptoAnt.data('ruta')&&(ptoAnt.data('ruta')==ruta)){
+								iniciar = false
+								set.remove()
+								console.log("cogiste un punto repetido")
+								console.log(arrayPtos)
+								crearRaya({
+									points:arrayPtos
+								})
+								ruta++;
+							}else{
+								arrayPtos.push(ptoNuevo)
+								var newPto = paper.circle(x,y,3)
+								.attr({
+									stroke:"transparent",
+									fill:"rgba(0,220,6,.7)"
+								})
+								.hover(function(){
+									this.transform("s1.3")
+									this.attr({
+										stroke:"rgba(242,114,114,.6)"
+									})
+								})
+								.data('ruta',ruta)
+								set.push(newPto)
+							}
+					}
+				});
 		}
 
 		function crearTexto (opt) {
@@ -230,7 +289,6 @@
 
 		$btnCrearRaya.click(function(event) {
 			crearRaya({
-				points:["0,0","20,150"]
 			})
 		});
 		$btnCrearCircle.click(function(event) {
@@ -254,7 +312,9 @@
 			crearRectangulo(opt)
 		});
 
-
+		$btnCrearForma.click(function(event) {
+			crearPts()
+		});
 		$eliminar.click(function(event) {
 			eliminarElemento()
 		});
