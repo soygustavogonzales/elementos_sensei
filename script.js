@@ -55,9 +55,9 @@
     		console.log(this._['bboxwt'])
 
     	//console.log(this._.bboxwt.x +" , "+this._.bboxwt.x)
-    	//elActual = this;
+    	//actual = this;
     	//console.log(e)
-    	var datos = elActual.getBBox(false);
+    	var datos = actual.getBBox(false);
 					//console.log(datos)
 					console.log(datos.x+" , "+datos.y)
 
@@ -116,10 +116,10 @@
 		var ele;
 		svg_.onmousedown = function(e){
 			//sconsole.log(e.x + " , "+e.y)
-			ele = paper.getElementByPoint(e.x,e.y);
-			elActual = ele
+			actual = paper.getElementByPoint(e.x,e.y);
+			//actual = ele
 			mover = !mover
-			console.log(ele)
+			console.log(actual)
 		}
 
 		svg_.onmouseup = function(e){
@@ -128,10 +128,10 @@
 
 		svg_.onmousemove = function(e){
 			//console.log(e.x + " , "+e.y)
-			if(ele&&mover){
-				var deegre = ele._['deg'],
-				scale = ele._['sx'];
-				ele.transform("t"+(e.x)+","+(e.y)+"r"+deegre+"s"+scale)
+			if(actual&&mover){
+				var deegre = actual._['deg'],
+				scale = actual._['sx'];
+				actual.transform("t"+(e.x)+","+(e.y)+"r"+deegre+"s"+scale)
 			}
 		}
 
@@ -214,10 +214,10 @@
 
 		function eliminarElemento (){
 			console.log("removiendo...")
-			elActual.remove()
+			actual.remove()
 		}
 		$btnCambiarTexto.click(function(event) {
-			elActual.attr({
+			actual.attr({
 				text:$parrafo.val()
 			})
 		});
@@ -260,13 +260,13 @@
 		});
 
 		function transformar() {
-   var datos = elActual.getBBox(false);
-   console.log(datos.x +" : "+datos.y+ ", deg:"+elActual._['deg'])
+   var datos = actual.getBBox(false);
+   console.log(datos.x +" : "+datos.y+ ", deg:"+actual._['deg'])
 			var deegre = $rotate.val(),
 			x = $translatex.val(),
 			y = $translatey.val(),
 			scale = 1+(parseInt($escala.val())/10)
-			elActual.transform("t"+x+","+y+"r"+deegre+"s"+scale)			
+			actual.transform("t"+x+","+y+"r"+deegre+"s"+scale)			
 		}
 
 		$rotate.change(function(event) {
@@ -288,14 +288,14 @@
 		});
 
 		$alto.change(function(event) {
-			elActual.attr({
+			actual.attr({
 				height:$alto.val()
 			})
 		});
 
 
 		$ancho.change(function(event) {
-			elActual.attr({
+			actual.attr({
 				width:$ancho.val()
 			})
 		});
