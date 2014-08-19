@@ -1,5 +1,6 @@
 		var paper = Raphael('caja', 1200, 560),
-  set = paper.set(),
+  //set = paper.set(),
+  $caja = $('#caja'),
 	 $btnCrearRect = $('.rectangle'),
 		$rotate = $('.rotate'),
 		$translatex = $('.translatex'),
@@ -16,9 +17,14 @@
 		$btnCambiarTexto = $('.ctexto'),
 		$parrafo = $('.parrafo'),
 		$btnCrearForma = $('.cforma'),
+		$btnCrearPtos = $('.cPtos'),
+		svg_ = document.getElementsByTagName('svg')[0],
+		$svg_ = $(svg_),
 		elActual = null,
+		mover = !true,
 		actual = null,ant = null,
-		svg_ = document.getElementsByTagName('svg')[0];
+		ruta = 1;
+
 
 		Raphael.el.setCustomAttributes = function() {
 			var tipoEle = this.node.tagName;
@@ -27,6 +33,46 @@
 					ctmAttrs = {
 						'font-size':20
 					}
+						var taTemporal = document.createElement("textarea");
+						var $taTemp = $(taTemporal);
+						$taTemp.attr("cols",5)
+						$taTemp.attr("rows",2)
+					this.dblclick(function(event) {
+						console.log("doble click")
+						var x = 0, y = 0;
+						if(this.attrs&&this.attrs.text)
+							$taTemp.val(this.attrs.text)
+						if(this._&&this._['bbox']&&this._['bbox']['cx']!=null&&this._['bbox']['cy']!=null){
+							x = this._['bbox']['cx'];y = this._['bbox']['cy'];
+							console.log(x+" , "+y)
+						}
+						$taTemp.css({
+							background:"transparent",
+							outline:"none",
+							padding:"0px 5px",
+							"font-size":"20px",
+							position:"absolute",
+							top:((y)?((y-20)+"px"):"100px"),
+							left:((x)?((x-20)+"px"):"100px")
+						})
+						this.hide()
+						$caja.append($taTemp)
+						var self = this;
+						$taTemp.mouseout(function(event) {
+							//this = $taTemp
+							self.attr({
+								text:$taTemp.val()
+							})
+							this.remove()
+							self.show()
+						});
+						$taTemp.keyup(function(event) {
+							//console.log(event)
+							var anchoTa = parseInt($taTemp.attr("cols")) +1
+							$taTemp.attr("cols",anchoTa)
+						});
+					});
+
 				break;
 				case'rect':
 					ctmAttrs = {
@@ -45,33 +91,43 @@
 				}
 				break;
 			}
-
+			this.mousedown(function(event) {
+				actual = this
+				mover = !mover
+				console.log(this)
+			});
 			this.mouseup(function(e){
-    		console.log(this)
-    		console.log(this._)
+				mover = !mover
+    		//console.log(this)
+    		//console.log(this._)
     	if(this._['bboxwt']&&this._['bboxwt'].toString){
-    		console.log(this._['bboxwt'])
+    		//console.log(this._['bboxwt'])
     	}
     	else
-    		console.log(this._['bboxwt'])
+    		//console.log(this._['bboxwt'])
 
     	//console.log(this._.bboxwt.x +" , "+this._.bboxwt.x)
     	//actual = this;
     	//console.log(e)
+    	var x = 0, y = 0;
+    	if(actual._&&actual._['bbox']){
+    		x = actual._['bbox']['cx'], y = actual._['bbox']['cy'];
+    		//console.log(x + " * "+ y)
+    	}
     	var datos = actual.getBBox(false);
 					//console.log(datos)
-					console.log(datos.x+" , "+datos.y)
+					//console.log(datos.x+" , "+datos.y)
 
 					$alto.val(this.height)
 					$ancho.val(this.width)
-					$translatex.val(datos.x)
-					$translatey.val(datos.y)
+					$translatex.val(((x)?x:datos.x))
+					$translatey.val(((y)?y:datos.y))
 					if(this._&&this._['deg']!=undefined&&this._['sx']!=undefined){
 						$rotate.val(this._['deg'])
 						$escala.val(this._['sx'])
 					}
 
-
+					/*
 					console.log(
 							$alto.val()+", "+
 							$ancho.val()+", "+
@@ -80,14 +136,17 @@
 							$rotate.val()+", "+
 							$escala.val()
 					)
+					*/
 
 					if(actual){
 						ant = actual
 						actual = this
+						/*
 						console.group("actual")
 							console.log(actual)
 							console.log(ant)
 						console.groupEnd("actual")
+						*/
 						actual.attr({
 							stroke:"red"
 						})
@@ -96,9 +155,11 @@
 						})
 					}else{
 						actual = this
+						/*
 						console.group("actual else")
-							console.log(actual)
+						console.log(actual)
 						console.groupEnd("actual")
+						*/
 							actual.attr({
 								stroke:"red"
 							})
@@ -112,17 +173,17 @@
 			})
 
 			this.attr(ctmAttrs)
+			return this
 		}
-		
-		var mover = !true;
-		var ele;
+		/*
 		svg_.onmousedown = function(e){
 			//sconsole.log(e.x + " , "+e.y)
 			actual = paper.getElementByPoint(e.x,e.y);
 			//actual = ele
 			mover = !mover
-			console.log(actual)
+			//console.log(actual)
 		}
+		*/
 
 		svg_.onmouseup = function(e){
 			mover = !mover
@@ -133,7 +194,13 @@
 			if(actual&&mover){
 				var deegre = actual._['deg'],
 				scale = actual._['sx'];
-				actual.transform("t"+(e.x)+","+(e.y)+"r"+deegre+"s"+scale)
+				var Xdes = 0,Ydes = 0;
+					if(actual.data("objectName")&&(actual.data("objectName")=="objAmorfo"||actual.data("objectName")=="objPunto")){
+						//console.log(actual)
+						Xdes = actual.realPath[0][1],Ydes = actual.realPath[0][2];
+						//console.log(Xdes + " , "+Ydes)
+					}
+				actual.transform("t"+(e.x - Xdes)+","+(e.y - Ydes)+"r"+deegre+"s"+scale)
 			}
 		}
 
@@ -141,7 +208,7 @@
 	$pizarra.ubicacion = "atras"
 
 	$btnMoverPizarra.click(function(event) {
-		console.log($pizarra)
+		//console.log($pizarra)
 		if($pizarra.ubicacion == "atras"){
 			$pizarra.css({
 				'z-index':'2'
@@ -178,28 +245,42 @@
 		function crearRaya (opt) {
 			var default_ = {
 				points:["0,0","50,50"],
-				ancho:3
+				ancho:3,
+				objectName:null
 			}
 				opt = $.extend(default_,opt)
 				var path = "", l = opt.points.length-1;
 				$.each(opt.points, function(index, val) {
-					console.log(val)
+					//console.log(val)
 					if(index==0)
 					 path+="M"+val//path.concat("M"+val)
 					else if(index>0)
 						path+="L"+val
 				});
 				//path+="Z"
-				console.log(path)
+				//console.log(path)
 				var newLine = paper.path(path)
+				.attr({
+					fill:"rgba(0,0,0,.6)"
+				})
+				.data('objectName',opt.objectName)
 				.setCustomAttributes()
 				//.transform("s5")
 		}
 
-		function crearPts() {
-			var $svg_ = $(svg_),
-			ruta = 1,
-			set = paper.set();
+		function crearForma() {
+			crearPtos(function(opt){
+				crearRaya({
+					points:opt.arrayPtos,
+					objectName:"objAmorfo"
+				})
+				opt.setPtos.remove()
+			})
+		}
+
+		function crearPtos(callback) {
+			var callback = callback || function(){}
+			var set = paper.set();
 
 			$svg_.css({
 				cursor:"crosshair"
@@ -207,42 +288,42 @@
 			var arrayPtos = [],iniciar = true;
 				$svg_.click(function(event) {
 					if(iniciar){
-							console.log(event.originalEvent)
+						//	console.log(event.originalEvent)
 							var x = event.originalEvent.x, y = event.originalEvent.y,
 							ptoAnt = paper.getElementByPoint(x,y),
 							ptoNuevo = x+","+y;
-							console.log(ptoNuevo)
-							if(ptoAnt){
-								console.log(ptoAnt.data('ruta'))
-								if(ptoAnt.data('ruta')==ruta)
-									console.log("misma ruta")
-									console.log(ptoAnt?true:false)
-									console.log(ptoAnt.data('ruta')?true:false)
-									console.log((ptoAnt.data('ruta')==ruta)?true:false)
+							if(ptoAnt&&ptoAnt.data('ruta')&&(ptoAnt.data('ruta')==ruta)){//se cogio un pto repetido
 
-									console.log((ptoAnt&&ptoAnt.data('ruta')&&(ptoAnt.data('ruta')==ruta))?true:false)
-							}
-							if(ptoAnt&&ptoAnt.data('ruta')&&(ptoAnt.data('ruta')==ruta)){
 								iniciar = false
-								set.remove()
-								console.log("cogiste un punto repetido")
-								console.log(arrayPtos)
-								crearRaya({
-									points:arrayPtos
+								startDefaultStatus()
+								var ultimoEleEnSet = set[(set.length)-1],
+								primerEleEnSet = set[0];
+								arrayPtos.push(ptoNuevo)
+								if(ultimoEleEnSet.id==ptoAnt.id)
+									arrayPtos.splice(arrayPtos.length - 1,1)
+								callback({
+									arrayPtos:arrayPtos,
+									setPtos:set
 								})
+
 								ruta++;
 							}else{
 								arrayPtos.push(ptoNuevo)
-								var newPto = paper.circle(x,y,3)
+								var newPto = paper.circle(x,y,5)
+								.setCustomAttributes()
 								.attr({
 									stroke:"transparent",
 									fill:"rgba(0,220,6,.7)"
 								})
-								.hover(function(){
-									this.transform("s1.3")
+								.data('objectName','objPunto')
+								.mouseover(function(){
+									this.transform("s1.7")
 									this.attr({
-										stroke:"rgba(242,114,114,.6)"
+										stroke:"rgba(0,0,0,0)"
 									})
+								})
+								.mouseout(function(){
+									this.transform("s1")
 								})
 								.data('ruta',ruta)
 								set.push(newPto)
@@ -250,7 +331,11 @@
 					}
 				});
 		}
-
+		function startDefaultStatus() {
+				$svg_.css({
+					cursor:"default"
+				})
+		}
 		function crearTexto (opt) {
 			var default_ = {
 				texto : "{ }"
@@ -272,7 +357,7 @@
 		}
 
 		function eliminarElemento (){
-			console.log("removiendo...")
+			//console.log("removiendo...")
 			actual.remove()
 		}
 		$btnCambiarTexto.click(function(event) {
@@ -313,20 +398,31 @@
 		});
 
 		$btnCrearForma.click(function(event) {
-			crearPts()
+			crearForma()
 		});
 		$eliminar.click(function(event) {
 			eliminarElemento()
 		});
-
+		$btnCrearPtos.click(function(event) {
+			crearPtos()
+		});
 		function transformar() {
    var datos = actual.getBBox(false);
-   console.log(datos.x +" : "+datos.y+ ", deg:"+actual._['deg'])
+   //console.log(datos.x +" : "+datos.y+ ", deg:"+actual._['deg'])
+   var Xdes = 0, Ydes = 0;
 			var deegre = $rotate.val(),
-			x = $translatex.val(),
-			y = $translatey.val(),
-			scale = 1+(parseInt($escala.val())/10)
-			actual.transform("t"+x+","+y+"r"+deegre+"s"+scale)			
+			x = parseInt($translatex.val()),
+			y = parseInt($translatey.val()),
+			scale = 1+(parseInt($escala.val())/10);
+   if(actual.data('objectName')&&(actual.data('objectName')=="objAmorfo")){
+	   Xdes = actual._['bbox']['cx']
+	   Ydes = actual._['bbox']['cy']
+	   //console.log("coords: "+Xdes+" , "+Ydes)
+				//actual.transform("t"+(Xdes)+","+(Ydes)+"r"+deegre+"s"+scale)			
+				actual.transform("t"+x+","+y+"r"+deegre+"s"+scale)			
+   }else{
+				actual.transform("t"+(x - Xdes)+","+(y - Ydes)+"r"+deegre+"s"+scale)			
+   }
 		}
 
 		$rotate.change(function(event) {
