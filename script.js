@@ -33,68 +33,28 @@
 					ctmAttrs = {
 						'font-size':20
 					}
-						var taTemporal = document.createElement("textarea");
-						var $taTemp = $(taTemporal);
-						$taTemp.attr("cols",5)
-						$taTemp.attr("rows",2)
 					this.dblclick(function(event) {
-						console.log("doble click")
-						var x = 0, y = 0;
 						if(this.attrs&&this.attrs.text)
-							$taTemp.val(this.attrs.text)
-						if(this._&&this._['bbox']&&this._['bbox']['cx']!=null&&this._['bbox']['cy']!=null){
-							x = this._['bbox']['cx'];y = this._['bbox']['cy'];
-							console.log(x+" , "+y)
-						}
-						if(this._&&this._['dx']!=null&&this._['dy']!=null){
+							var text = this.attrs.text
+						if(this._&&this._['dx']!=null&&this._['dy']!=null)
 							x = this._['dx'];y = this._['dy'];
-							console.log(x+" , "+y)
+						var opt = {
+							multiline:true,
+							x:x,
+							y:y,
+							cols:50,
+							rows:5,
+							value:text
 						}
-						$taTemp.css({
-							background:"transparent",
-							outline:"none",
-							padding:"0px 5px",
-							"font-size":"20px",
-							position:"absolute",
-							top:((y)?((y)+"px"):"100px"),
-							left:((x)?((x)+"px"):"100px"),
-							border:"1px dotted #333"
-						})
+						var self = this
+						var callback = function(value) {
+								self.attr({
+									text:value
+								})
+								self.show()
+						}
+						crearCajaTexto(opt,callback)
 						this.hide()
-						$caja.append($taTemp)
-						var self = this;
-						$taTemp.mouseout(function(event) {
-							//this = $taTemp
-							self.attr({
-								text:$taTemp.val()
-							})
-							this.remove()
-							self.show()
-						});
-							var parar = false
-						$taTemp.keyup(function(event) {
-							var codCaracter = (event.keyCode)
-							var anchoTa = 0, altoTa = 0
-								console.log(codCaracter)
-							if(parar==false&&!(codCaracter==13||codCaracter==8||codCaracter==37||codCaracter==38||codCaracter==39||codCaracter==40)){
-								console.log("!13")
-								anchoTa = parseInt($taTemp.attr("cols")) + 1
-								console.log("anchoTa "+anchoTa)
-								$taTemp.attr("cols",anchoTa)
-								$taTemp.attr("rows",$taTemp.attr("rows"))
-								if(anchoTa>80)
-									parar = true
-							}
-
-							/*
-							else{
-								console.log("=13")
-								altoTa = parseInt($taTemp.attr("rows")) + 1
-								$taTemp.attr("cols",$taTemp.attr("cols"))
-								$taTemp.attr("rows",altoTa)
-							}
-							*/
-						});
 					});
 
 				break;
@@ -203,6 +163,24 @@
 		}
 		/*
 		*/
+		$svg_.dblclick(function(event) {
+			//console.log(event)
+			crearCajaTexto({
+				multiline:false,
+				x:event.pageX,
+				y:event.pageY,
+				value:"[  ]"
+			},function(value){
+				//console.log(value)
+				crearTexto({
+					texto:value,
+					x:event.pageX,
+					y:event.pageY
+				})
+			})
+			/*
+			*/
+		});
 		svg_.onmousedown = function(e){
 			//sconsole.log(e.x + " , "+e.y)
 			actual = paper.getElementByPoint(e.x,e.y);
@@ -248,8 +226,50 @@
 			$pizarra.ubicacion = "atras"
 		}
 	});
-			function crearCajaTexto (opt) {
-				
+
+			function crearCajaTexto (opt,callback) {
+				var default_ = {
+					multiline:false,//soportara? mas de 1 linea.multiline(textarea) , oneline(input(type="text"))
+					x:100,
+					y:100,
+					cols:3,
+					rows:1,
+					value:null			
+				}
+				opt = $.extend(default_, opt);
+				var input = null, $input = null
+					if(opt.multiline){
+						input = document.createElement("textarea");
+						$input = $(input);
+						$input.attr("cols",opt.cols)
+						$input.attr("rows",opt.rows)
+					}else{
+						 input = document.createElement('input')
+						 input.setAttribute('type','text')
+							$input = $(input);
+							$input.css({
+								width:"150px",
+							})
+					}
+						
+						$input.val(opt.value)
+						$input.css({
+							background:"transparent",
+							outline:"none",
+							padding:"0px 5px",
+							"font-size":"20px",
+							position:"absolute",
+							top:((opt.y)?((opt.y)+"px"):"100px"),
+							left:((opt.x)?((opt.x)+"px"):"100px"),
+							border:"1px dotted #333"
+						})
+						$caja.append($input)
+
+						$input.mouseout(function(event) {
+							callback($input.val())
+							$input.remove()
+						});
+			
 			}
 		function crearRectangulo (opt){
 				var default_ = {
@@ -366,10 +386,12 @@
 		}
 		function crearTexto (opt) {
 			var default_ = {
-				texto : "{ }"
+				texto : "{ }",
+				x:20,
+				y:20
 			}
 			opt = $.extend(default_,opt)
-			var newText = paper.text(20,20,opt.texto)
+			var newText = paper.text(opt.x,opt.y,opt.texto)
 			.setCustomAttributes()
 		}
 		function crearCirculo(opt) {
