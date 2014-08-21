@@ -46,14 +46,19 @@
 							x = this._['bbox']['cx'];y = this._['bbox']['cy'];
 							console.log(x+" , "+y)
 						}
+						if(this._&&this._['dx']!=null&&this._['dy']!=null){
+							x = this._['dx'];y = this._['dy'];
+							console.log(x+" , "+y)
+						}
 						$taTemp.css({
 							background:"transparent",
 							outline:"none",
 							padding:"0px 5px",
 							"font-size":"20px",
 							position:"absolute",
-							top:((y)?((y-20)+"px"):"100px"),
-							left:((x)?((x-20)+"px"):"100px")
+							top:((y)?((y)+"px"):"100px"),
+							left:((x)?((x)+"px"):"100px"),
+							border:"1px dotted #333"
 						})
 						this.hide()
 						$caja.append($taTemp)
@@ -66,10 +71,29 @@
 							this.remove()
 							self.show()
 						});
+							var parar = false
 						$taTemp.keyup(function(event) {
-							//console.log(event)
-							var anchoTa = parseInt($taTemp.attr("cols")) +1
-							$taTemp.attr("cols",anchoTa)
+							var codCaracter = (event.keyCode)
+							var anchoTa = 0, altoTa = 0
+								console.log(codCaracter)
+							if(parar==false&&!(codCaracter==13||codCaracter==8||codCaracter==37||codCaracter==38||codCaracter==39||codCaracter==40)){
+								console.log("!13")
+								anchoTa = parseInt($taTemp.attr("cols")) + 1
+								console.log("anchoTa "+anchoTa)
+								$taTemp.attr("cols",anchoTa)
+								$taTemp.attr("rows",$taTemp.attr("rows"))
+								if(anchoTa>80)
+									parar = true
+							}
+
+							/*
+							else{
+								console.log("=13")
+								altoTa = parseInt($taTemp.attr("rows")) + 1
+								$taTemp.attr("cols",$taTemp.attr("cols"))
+								$taTemp.attr("rows",altoTa)
+							}
+							*/
 						});
 					});
 
@@ -91,13 +115,15 @@
 				}
 				break;
 			}
+			/*
 			this.mousedown(function(event) {
 				actual = this
 				mover = !mover
 				console.log(this)
 			});
+			*/
 			this.mouseup(function(e){
-				mover = !mover
+				//mover = !mover
     		//console.log(this)
     		//console.log(this._)
     	if(this._['bboxwt']&&this._['bboxwt'].toString){
@@ -176,14 +202,14 @@
 			return this
 		}
 		/*
+		*/
 		svg_.onmousedown = function(e){
 			//sconsole.log(e.x + " , "+e.y)
 			actual = paper.getElementByPoint(e.x,e.y);
 			//actual = ele
 			mover = !mover
-			//console.log(actual)
+			console.log(actual)
 		}
-		*/
 
 		svg_.onmouseup = function(e){
 			mover = !mover
@@ -222,7 +248,9 @@
 			$pizarra.ubicacion = "atras"
 		}
 	});
-
+			function crearCajaTexto (opt) {
+				
+			}
 		function crearRectangulo (opt){
 				var default_ = {
 					x : 0,//posicion en el eje x
