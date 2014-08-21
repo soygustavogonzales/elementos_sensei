@@ -12,8 +12,37 @@
 </head>
 <body>
 <div id="wrap">
-	<div id="caja"></div>
+	<div id="caja">
+		<div id="settingBox" class="hide">
+			<label for="ancho">ancho</label>
+			<input class="form-control ancho" type="range" min="5" max="500" name="ancho">
+			<br>
+			<label for="alto">alto</label>
+			<input class="form-control alto" type="range" min="5" max="500" name="alto">
+			<br>
+			<label for="escala">escala</label>
+			<input class="form-control escala" type="range" value="0" min="1" max="100" name="escala">
+			<br>
+			<label for="rotate">rotate</label>
+			<input class="form-control rotate" type="range" value="0" min="0" max="360" name="rotate">
+			<br>
+			<label for="translatex">translatex</label>
+			<input class="form-control translatex" type="range" value="0" min="0" max="1000" name="translatex">
+			<br>
+			<label for="translatey">translatey</label>
+			<input class="form-control translatey" type="range" value="0" min="0" max="560" name="translatey">
+			<br>
+			<label for="color">color</label>
+			<input class="form-control color" type="color" value="#f03737" name="color">
+			<br>
+			<label for="color-borde">borde</label>
+			<input class="form-control color-borde" type="color" value="#f03737" name="color-borde">
+		</div>
+
+			
+	</div>
 </div>
+	<div class="fondo-pizarra"></div>
 	<canvas id="blackboard" class="pizarra" width="1200" height="560"></canvas>
 	<div class="controls">
 		<button id="change" class="form-control">Mover pizarra</button>
@@ -27,20 +56,6 @@
 		<button class="form-control cPtos">crear Ptos</button>
 		<textarea class="parrafo" name="pararro" id="texto" cols="10" rows="3"></textarea>
 		<br>
-		<label for="ancho">ancho</label>
-		<input class="form-control ancho" type="range" min="5" max="500" name="ancho">
-		<label for="alto">alto</label>
-		<input class="form-control alto" type="range" min="5" max="500" name="alto">
-		<label for="alto">escala</label>
-		<input class="form-control escala" type="range" value="0" min="1" max="100" name="escala">
-		<label for="rotate">rotate</label>
-		<input class="form-control rotate" type="range" value="0" min="0" max="360" name="rotate">
-		<label for="translatex">translatex</label>
-		<input class="form-control translatex" type="range" value="0" min="0" max="1000" name="translatex">
-		<label for="translatey">translatey</label>
-		<input class="form-control translatey" type="range" value="0" min="0" max="560" name="translatey">
-		<label for="color">color</label>
-		<input class="form-control color" type="color" value="#f03737" name="color">
 	</div>
 	<!-- 
 	 <canvas id="blackboard" width="1200" height="560"></canvas>

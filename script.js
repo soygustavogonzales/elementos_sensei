@@ -1,4 +1,4 @@
-		var paper = Raphael('caja', 1200, 560),
+		var paper = Raphael('caja', screen.width - 0, screen.height - 90),
   //set = paper.set(),
   $caja = $('#caja'),
 	 $btnCrearRect = $('.rectangle'),
@@ -18,6 +18,9 @@
 		$parrafo = $('.parrafo'),
 		$btnCrearForma = $('.cforma'),
 		$btnCrearPtos = $('.cPtos'),
+		$settingBox = $('#settingBox'),
+		$fondoPizarra = $('.fondo-pizarra'),
+		$body = $('body'),
 		svg_ = document.getElementsByTagName('svg')[0],
 		$svg_ = $(svg_),
 		elActual = null,
@@ -25,7 +28,16 @@
 		actual = null,ant = null,
 		ruta = 1;
 
+		$body.width(screen.width-0)
+		$body.height(683)
+		$svg_.attr('id', 'svg_pizarra1');
+		$svg_.attr('class', 'svg_pizarra');
+		$fondoPizarra.width(screen.width-0)
+		$fondoPizarra.height(683)
+		$pizarra[0].width = screen.width -0
+		$pizarra[0].height = 683
 
+		//console.log($pizarra[0])
 		Raphael.el.setCustomAttributes = function() {
 			var tipoEle = this.node.tagName;
 			switch(tipoEle){
@@ -33,30 +45,6 @@
 					ctmAttrs = {
 						'font-size':20
 					}
-					this.dblclick(function(event) {
-						if(this.attrs&&this.attrs.text)
-							var text = this.attrs.text
-						if(this._&&this._['dx']!=null&&this._['dy']!=null)
-							x = this._['dx'];y = this._['dy'];
-						var opt = {
-							multiline:true,
-							x:x,
-							y:y,
-							cols:50,
-							rows:5,
-							value:text
-						}
-						var self = this
-						var callback = function(value) {
-								self.attr({
-									text:value
-								})
-								self.show()
-						}
-						crearCajaTexto(opt,callback)
-						this.hide()
-					});
-
 				break;
 				case'rect':
 					ctmAttrs = {
@@ -75,26 +63,8 @@
 				}
 				break;
 			}
-			/*
-			this.mousedown(function(event) {
-				actual = this
-				mover = !mover
-				console.log(this)
-			});
-			*/
-			this.mouseup(function(e){
-				//mover = !mover
-    		//console.log(this)
-    		//console.log(this._)
-    	if(this._['bboxwt']&&this._['bboxwt'].toString){
-    		//console.log(this._['bboxwt'])
-    	}
-    	else
-    		//console.log(this._['bboxwt'])
 
-    	//console.log(this._.bboxwt.x +" , "+this._.bboxwt.x)
-    	//actual = this;
-    	//console.log(e)
+			this.mouseup(function(e){
     	var x = 0, y = 0;
     	if(actual._&&actual._['bbox']){
     		x = actual._['bbox']['cx'], y = actual._['bbox']['cy'];
@@ -112,44 +82,6 @@
 						$rotate.val(this._['deg'])
 						$escala.val(this._['sx'])
 					}
-
-					/*
-					console.log(
-							$alto.val()+", "+
-							$ancho.val()+", "+
-							$translatex.val()+", "+
-							$translatey.val()+", "+
-							$rotate.val()+", "+
-							$escala.val()
-					)
-					*/
-
-					if(actual){
-						ant = actual
-						actual = this
-						/*
-						console.group("actual")
-							console.log(actual)
-							console.log(ant)
-						console.groupEnd("actual")
-						*/
-						actual.attr({
-							stroke:"red"
-						})
-						ant.attr({
-							stroke:"black"
-						})
-					}else{
-						actual = this
-						/*
-						console.group("actual else")
-						console.log(actual)
-						console.groupEnd("actual")
-						*/
-							actual.attr({
-								stroke:"red"
-							})
-					}
     })
 
 			this.hover(function(){
@@ -157,8 +89,13 @@
 					cursor:"move"
 				})
 			})
-
+			this.click(function(event) {
+				showSettingBox({
+					element:this.node.tagName
+				})
+			});
 			this.attr(ctmAttrs)
+
 			return this
 		}
 		/*
@@ -215,17 +152,78 @@
 		//console.log($pizarra)
 		if($pizarra.ubicacion == "atras"){
 			$pizarra.css({
-				'z-index':'2'
+				'z-index':'4'
 			})
 			$pizarra.ubicacion = "adelante"
 		}
 		else{
 				$pizarra.css({
-				'z-index':'1'
+				'z-index':'2'
 			})
 			$pizarra.ubicacion = "atras"
 		}
 	});
+
+			function showSettingBox (opt) {
+					var Element,rect,circle,text,path,default_;
+					Element = function() {
+						this.attributes = ["escala","rotacion","color-fondo","color-borde"]
+					}
+
+					rect = new Element()
+					circle = new Element()
+					text = new Element()
+					path = new Element()
+
+					rect.attributes.push("ancho")
+					rect.attributes.push("alto")
+					circle.attributes.splice(circle.attributes.indexOf("rotacion"),1)
+					text.attributes.splice(text.attributes.indexOf("color-borde"),1)
+					text.attributes.push("font-size")
+					text.attributes.push("texto")
+
+					default_ = {
+						x:0,
+						y:0,
+						element:"rect",
+					}
+
+					opt = $.extend(default_, opt);
+
+					switch(true){
+						case(opt.element == "rect"):
+							opt.attributes = rect.attributes
+						break;
+						case(opt.element == "circle"):
+							opt.attributes = circle.attributes
+						break;
+						case(opt.element == "text"):
+							opt.attributes = text.attributes
+						break;
+						case(opt.element == "path"):
+							opt.attributes = path.attributes
+						break;
+					}
+					console.log(opt)
+					$settingBox.addClass('show')
+					$settingBox.removeClass('hide')
+					var timer = setTimeout(function(){
+							$settingBox.addClass('hide')
+							$settingBox.removeClass('show')						
+					},1500)
+					$settingBox.mouseover(function(event) {
+						clearTimeout(timer)
+					});
+					var ocultar = false
+					$settingBox.mouseleave(function(event) {
+							console.log("leave")
+							$settingBox.removeClass('show')						
+							$settingBox.addClass('hide')
+					});
+
+
+
+			}
 
 			function crearCajaTexto (opt,callback) {
 				var default_ = {
@@ -349,6 +347,7 @@
 								arrayPtos.push(ptoNuevo)
 								if(ultimoEleEnSet.id==ptoAnt.id)
 									arrayPtos.splice(arrayPtos.length - 1,1)
+
 								callback({
 									arrayPtos:arrayPtos,
 									setPtos:set
@@ -358,7 +357,7 @@
 							}else{
 								arrayPtos.push(ptoNuevo)
 								var newPto = paper.circle(x,y,5)
-								.setCustomAttributes()
+								//.setCustomAttributes()
 								.attr({
 									stroke:"transparent",
 									fill:"rgba(0,220,6,.7)"

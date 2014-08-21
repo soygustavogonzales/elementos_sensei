@@ -10,22 +10,68 @@
 	}
 		canvas:first-child{
 			background: rgba(0,0,0,0);
-			opacity: .1;
-			position: absolute;
-			z-index: 1;
-		}
-		#caja{
+			opacity: 0;
 			position: absolute;
 			z-index: 2;
 		}
+		#caja{
+			position: absolute;
+			z-index: 3;
+		}
+		.svg_pizarra{
+			
+		}
+		.fondo-pizarra {
+		  background-color: #fff;
+		  background-image: linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px), linear-gradient(#eeeeee 0.1em, transparent 0.1em);
+		  background-size: 100% 1.2em;
+				position: absolute;
+				width: 1200px;
+				height: 560px;
+				z-index: 1;
+		}	
+		#settingBox {
+			position: absolute;
+			top:0;
+			bottom: 0;
+			left:0;
+			right: 0;
+			padding: .5em;
+			margin: auto;
+			width:15rem;
+			height: 25em;
+			background: rgba(46,202,41,.7);
+			font-size: 1em;
+			font-family: sans-serif;
+			text-align: left;
+			color:#333;
+			opacity: .6;
+			-webkit-transition: all .55s ease;
+   transition: all .55s ease;
+		}
+
+		.hide {
+			visibility: hidden;
+			display: none;
+			-webkit-transition: all .55s ease;
+   transition: all .55s ease;
+		}
+		.show {
+			visibility: visible;
+			display: block;
+			-webkit-transition: all .55s ease;
+   transition: all .55s ease;
+		}
+
 
 		.controls{
-			position: relative;
+			position: absolute;
+			z-index: 100;
+			bottom: 0;
 		}
 		#blackboard{
   	display: block;
 			background: transparent;
-			//background: #eee;
 			position: relative;
 			border:0px dotted #444;
 		}
