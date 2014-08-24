@@ -332,17 +332,18 @@
 										if(this._&&this._['bbox']&&this._['bbox']['cx']&&this._['bbox']['cy']){
 											ccx = this._['bbox']['cx'];ccy = this._['bbox']['cy'];
 										}
-
+										paper.circle(ccx,ccy,3).attr({fill:"black",stroke:"none"})
 										var ddx_ = 0, ddy_ = 0;
 										if(this._&&this._['dx']&&this._['dy']){
 											ddx_ = this._['dx'];ddy_ = this._['dy'];
 										}
+										paper.circle(ddx_,ddy_,3).attr({fill:"yellow",stroke:"none"})
 										
 										var a = (ccx - ddx_), b = (ccy - ddy_);
 										console.log(a+" : "+b)
 										var m = (ccx - a), n = (ccy - b);
 										console.log(m+" : "+n)
-										this.transform("t"+(mx - a)+","+(my - b))
+										this.transform("t"+(mx)+","+(my))
 
 							}
 				set_.push(newFigure)  
