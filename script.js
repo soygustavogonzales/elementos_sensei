@@ -1,5 +1,5 @@
 		var paper = Raphael('caja', screen.width - 0, screen.height - 90),
-  //set = paper.set(),
+  set_ = paper.set(),
   $caja = $('#caja'),
 	 $btnCrearRect = $('.rectangle'),
 		$rotate = $('.rotate'),
@@ -115,8 +115,6 @@
 					y:event.pageY
 				})
 			})
-			/*
-			*/
 		});
 		svg_.onmousedown = function(e){
 			//sconsole.log(e.x + " , "+e.y)
@@ -126,6 +124,7 @@
 			console.log(actual)
 		}
 
+		/*
 		svg_.onmouseup = function(e){
 			mover = !mover
 		}
@@ -144,6 +143,7 @@
 				actual.transform("t"+(e.x - Xdes)+","+(e.y - Ydes)+"r"+deegre+"s"+scale)
 			}
 		}
+		*/
 
 
 	$pizarra.ubicacion = "atras"
@@ -283,9 +283,9 @@
 				//console.log(opt)
     var newCuadrado = paper.rect(opt.x, opt.y, opt.width, opt.height,opt.punta)
     .setCustomAttributes()
-			 //set.push(newCuadrado)  
-    //.draggable(); 
-	   // watchElements();
+			 set_.push(newCuadrado)  
+    .draggable(); 
+	   //watchElements();
 		}
 
 		function crearRaya (opt) {
@@ -305,13 +305,48 @@
 				});
 				//path+="Z"
 				//console.log(path)
-				var newLine = paper.path(path)
+				var newFigure = paper.path(path)
 				.attr({
 					fill:"rgba(0,0,0,.6)"
 				})
 				.data('objectName',opt.objectName)
 				.setCustomAttributes()
-				//.transform("s5")
+
+							var onend = function(e,y){
+								console.log("end")
+								console.log(e)
+							}
+							var onstart = function(x,y){
+								console.log("start")
+								//console.log(x+" : "+y)
+								this.attr({
+									fill:"blue"
+								})
+
+							}
+							var onmove = function(dx, dy, mx, my, ev){
+								console.log("onmove")
+								console.log(this)
+
+										var ccx = 0, ccy = 0;
+										if(this._&&this._['bbox']&&this._['bbox']['cx']&&this._['bbox']['cy']){
+											ccx = this._['bbox']['cx'];ccy = this._['bbox']['cy'];
+										}
+
+										var ddx_ = 0, ddy_ = 0;
+										if(this._&&this._['dx']&&this._['dy']){
+											ddx_ = this._['dx'];ddy_ = this._['dy'];
+										}
+										
+										var a = (ccx - ddx_), b = (ccy - ddy_);
+										console.log(a+" : "+b)
+										var m = (ccx - a), n = (ccy - b);
+										console.log(m+" : "+n)
+										this.transform("t"+(mx - a)+","+(my - b))
+
+							}
+				set_.push(newFigure)  
+    .drag(onmove,onstart,onend); 
 		}
 
 		function crearForma() {
@@ -374,6 +409,8 @@
 								})
 								.data('ruta',ruta)
 								set.push(newPto)
+								set_.push(newPto)
+								.draggable()
 							}
 					}
 				});
@@ -403,6 +440,8 @@
 				opt = $.extend(default_,opt)
 				var newCirculo = paper.circle(opt.x,opt.y,opt.r)
 				.setCustomAttributes()
+				set_.push(newCirculo)
+				.draggable()
 		}
 
 		function eliminarElemento (){
