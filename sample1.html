@@ -6,11 +6,50 @@
 	<script src="../../bower_components/raphael/raphael-min.js"></script>
 	<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="raphael.dragAndDrop.js"></script>
-	<!-- 
-	 -->
+ <link rel="stylesheet" type="text/css" href="font-awesome-4.1.0/css/font-awesome.min.css"/>
+ <link rel="stylesheet" href="dashboard.css">
 	<link rel="stylesheet" href="styles.css">
 </head>
 <body>
+			<div class="box">
+		    <div class="logo">
+		      <img src="avatar.jpg" alt="" />
+		    </div>
+		    <nav role='navigation'>
+		      <ul>
+		        <li>
+		          <a href="#">
+		            <i class="fa fa-search fa-fw icon"></i>
+		            Search
+		          </a>
+		        </li>
+		        <li>
+		          <a href="#">
+		            <i class="fa fa-book fa-fw icon"></i>
+		            Library
+		          </a>
+		        </li>
+		        <li>
+		          <a href="#">
+		            <i class="fa fa-codepen fa-fw icon"></i>
+		            Snippets
+		          </a>
+		        </li>
+		        <li>
+		          <a href="#">
+		            <i class="fa fa-cog fa-spin icon"></i>
+		            Settings
+		          </a>
+		        </li>
+		      </ul>
+		    </nav>   
+		 </div><!-- ./ box -->
+			<!-- date -->
+			<div class="date"> </div>
+			<div class="esquina esquina-arriba"></div>
+			<div class="esquina esquina-bajo">
+			  <i class="fa fa-pencil fa-1x"></i>
+			</div>
 <div id="wrap">
 	<div id="caja">
 		<div id="settingBox" class="hide">
@@ -57,10 +96,8 @@
 		<textarea class="parrafo" name="pararro" id="texto" cols="10" rows="3"></textarea>
 		<br>
 	</div>
-	<!-- 
-	 <canvas id="blackboard" width="1200" height="560"></canvas>
-	 -->
 	<script src="script.js"></script>
 	<script src="pizarra.js"></script>
+	<script src="dashboard.js"></script>
 </body>
 </html>

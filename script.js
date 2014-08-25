@@ -45,22 +45,50 @@
 					ctmAttrs = {
 						'font-size':20
 					}
+					set_.push(this).draggable()
 				break;
 				case'rect':
 					ctmAttrs = {
 						fill:"rgba(0,0,0,0)"				
 					}
+					set_.push(this).draggable()
 				break;
 				case'circle':
 				ctmAttrs = {
 						fill:"rgba(0,0,0,0)"				
 				}
+					set_.push(this).draggable()
 				break;
 				case'path':
 				ctmAttrs = {
 					"stroke-width":2
 					,title:"linea"
 				}
+							var onend = function(e,y){
+								console.log("end")
+								console.log(e)
+							}
+							var onstart = function(x,y){
+								console.log("start")
+								//console.log(x+" : "+y)
+								this.attr({
+									fill:"rgba(0,0,0,.9)"
+								})
+
+							}
+							var onmove = function(dx, dy, mx, my, ev){
+								console.log("onmove")
+								console.log(this)
+										var x = this.attrs.path[0][1]// coordenada x del primer pto de la figura amorfa
+										var y = this.attrs.path[0][2]// coordenada y del primer pto de la figura amorfa
+
+										console.log(x+" * "+y)
+
+										this.transform("t"+(mx-x)+","+(my-y))
+										//this.transform("t"+(ddx_-x)+","+(ddy_-y))
+
+							}
+						set_.push(this).drag(onmove,onstart,onend);
 				break;
 			}
 
@@ -106,14 +134,16 @@
 				multiline:false,
 				x:event.pageX,
 				y:event.pageY,
-				value:"[  ]"
+				value:""
 			},function(value){
 				//console.log(value)
-				crearTexto({
-					texto:value,
-					x:event.pageX,
-					y:event.pageY
-				})
+				if(value!=""){
+						crearTexto({
+							texto:value,
+							x:event.pageX,
+							y:event.pageY
+						})
+				}
 			})
 		});
 		svg_.onmousedown = function(e){
@@ -124,26 +154,6 @@
 			console.log(actual)
 		}
 
-		/*
-		svg_.onmouseup = function(e){
-			mover = !mover
-		}
-
-		svg_.onmousemove = function(e){
-			//console.log(e.x + " , "+e.y)
-			if(actual&&mover){
-				var deegre = actual._['deg'],
-				scale = actual._['sx'];
-				var Xdes = 0,Ydes = 0;
-					if(actual.data("objectName")&&(actual.data("objectName")=="objAmorfo"||actual.data("objectName")=="objPunto")){
-						//console.log(actual)
-						Xdes = actual.realPath[0][1],Ydes = actual.realPath[0][2];
-						//console.log(Xdes + " , "+Ydes)
-					}
-				actual.transform("t"+(e.x - Xdes)+","+(e.y - Ydes)+"r"+deegre+"s"+scale)
-			}
-		}
-		*/
 
 
 	$pizarra.ubicacion = "atras"
@@ -204,7 +214,7 @@
 							opt.attributes = path.attributes
 						break;
 					}
-					console.log(opt)
+//					console.log(opt)
 					$settingBox.addClass('show')
 					$settingBox.removeClass('hide')
 					var timer = setTimeout(function(){
@@ -263,9 +273,15 @@
 						})
 						$caja.append($input)
 
-						$input.mouseout(function(event) {
-							callback($input.val())
-							$input.remove()
+						$input.keyup(function(event) {
+							var code  = event.keyCode;
+							//console.log(code)
+							if(code==13){//si tecleo [ENTER]
+								if($.trim($input.val())!="")
+									callback($input.val())
+								$input.remove()
+							}
+								
 						});
 			
 			}
@@ -283,8 +299,7 @@
 				//console.log(opt)
     var newCuadrado = paper.rect(opt.x, opt.y, opt.width, opt.height,opt.punta)
     .setCustomAttributes()
-			 set_.push(newCuadrado)  
-    .draggable(); 
+			 //set_.push(newCuadrado).draggable(); 
 	   //watchElements();
 		}
 
@@ -307,47 +322,15 @@
 				//console.log(path)
 				var newFigure = paper.path(path)
 				.attr({
-					fill:"rgba(0,0,0,.6)"
+					fill:"rgba(0,0,0,.4)",
+					stroke:"rgba(0,0,0,.9)",
+					'stroke-width':2
+
 				})
 				.data('objectName',opt.objectName)
 				.setCustomAttributes()
 
-							var onend = function(e,y){
-								console.log("end")
-								console.log(e)
-							}
-							var onstart = function(x,y){
-								console.log("start")
-								//console.log(x+" : "+y)
-								this.attr({
-									fill:"blue"
-								})
-
-							}
-							var onmove = function(dx, dy, mx, my, ev){
-								console.log("onmove")
-								console.log(this)
-
-										var ccx = 0, ccy = 0;
-										if(this._&&this._['bbox']&&this._['bbox']['cx']&&this._['bbox']['cy']){
-											ccx = this._['bbox']['cx'];ccy = this._['bbox']['cy'];
-										}
-										paper.circle(ccx,ccy,3).attr({fill:"black",stroke:"none"})
-										var ddx_ = 0, ddy_ = 0;
-										if(this._&&this._['dx']&&this._['dy']){
-											ddx_ = this._['dx'];ddy_ = this._['dy'];
-										}
-										paper.circle(ddx_,ddy_,3).attr({fill:"yellow",stroke:"none"})
-										
-										var a = (ccx - ddx_), b = (ccy - ddy_);
-										console.log(a+" : "+b)
-										var m = (ccx - a), n = (ccy - b);
-										console.log(m+" : "+n)
-										this.transform("t"+(mx)+","+(my))
-
-							}
-				set_.push(newFigure)  
-    .drag(onmove,onstart,onend); 
+ 
 		}
 
 		function crearForma() {
@@ -430,6 +413,7 @@
 			opt = $.extend(default_,opt)
 			var newText = paper.text(opt.x,opt.y,opt.texto)
 			.setCustomAttributes()
+
 		}
 		function crearCirculo(opt) {
 				var default_ = {
@@ -441,8 +425,7 @@
 				opt = $.extend(default_,opt)
 				var newCirculo = paper.circle(opt.x,opt.y,opt.r)
 				.setCustomAttributes()
-				set_.push(newCirculo)
-				.draggable()
+				//set_.push(newCirculo).draggable()
 		}
 
 		function eliminarElemento (){
