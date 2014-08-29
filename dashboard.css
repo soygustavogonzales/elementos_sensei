@@ -67,7 +67,7 @@ h1,.info > h1 {
   padding:0;
   overflow:hidden;
   background:#000;
-  background: rgba(0, 0, 0, 0.67);
+  background: rgba(29,224,61,.9);
   color:#ECF0F1;
   z-index: 10;
   -webkit-animation:colorAnimation 2.5s infinite;
@@ -98,6 +98,7 @@ h1,.info > h1 {
   text-align: center;
   text-decoration: none;
   color: #999;
+  color: rgba(255,255,255,.9);
 }
 .box a:hover {
   background: #fff;
@@ -190,36 +191,37 @@ h1,.info > h1 {
 @-webkit-keyframes colorAnimation {
   0% {
     box-shadow:4.9em 0 1.9em rgba(98,96,96,.1);
+    box-shadow:4.9em 0 1.9em rgba(29,224,61,.9);
   }
   10% {
-    box-shadow:5em 0 2.2em rgba(98,96,96,.1);
+    box-shadow:5em 0 2.2em rgba(35,155,250,.1);
   }
   20% {
-    box-shadow:5.1em 0 2.3em rgba(98,96,96,.1);
+    box-shadow:5.1em 0 2.3em rgba(129,24,203,.1);
   }
   30% {
-    box-shadow:5.2em 0 2.4em rgba(98,96,96,.4);
+    box-shadow:5.2em 0 2.4em rgba(233,64,155,.4);
   }
   40% {
-    box-shadow:5.3em 0 2.5em rgba(98,96,96,.5);
+    box-shadow:5.3em 0 2.5em #FE4444;
   }
   50% {
-    box-shadow:5.5em 0 2.5em rgba(98,96,96,.9);
+    box-shadow:5.5em 0 2.5em #F58859;
   }
   60% {
-    box-shadow:5.3em 0 2.5em rgba(98,96,96,.5);
+    box-shadow:5.3em 0 2.5em #FFC51B;
   }
   70% {
-    box-shadow:5.2em 0 2.4em rgba(98,96,96,.4);
+    box-shadow:5.2em 0 2.4em #9EF21F;
   }
   80% {
-    box-shadow:5.1em 0 2.3em rgba(98,96,96,.1);
+    box-shadow:5.1em 0 2.3em #F4F949;
   }
   90% {
-    box-shadow:5em 0 2.2em rgba(98,96,96,.1);
+    box-shadow:5em 0 2.2em #FF5C56;
   }
   100% {
-    box-shadow:4.9em 0 1.9em rgba(98,96,96,.1);
+    box-shadow:4.9em 0 1.9em #BD59DA;
   }
 
 }
