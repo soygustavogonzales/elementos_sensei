@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="fabric.js"></script>
+	<style>
+		#imagen {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+<div id="wrap">
+	<canvas id="c"></canvas>
+	<img src="la-creacion.jpg" id="imagen" alt="">
+</div>
+	<script>
+	!function(window,undefined){
+		var idEle = 0;
+		var maxWidthScreen = screen.width -50,
+		maxHeightScreen = screen.height - 50;
+
+		var canvas = new fabric.Canvas('c', {
+	  backgroundColor: '#F2F1F0',
+	  selectionColor: 'rgba(189,186,182,.4)',
+	  selectionLineWidth: 2,
+	  width:maxWidthScreen,
+	  height:maxHeightScreen
+		});
+		canvas.selectionBorderColor = "green"//"#20B84D"
+		canvas.isDrawingMode = true
+		canvas.freeDrawingBrush.width = 5
+		fabric.getById = function() {
+			return this
+		}
+		fabric.Rect.prototype.setId = function(first_argument) {
+			console.log(this)
+		};
+		var rect = new fabric.Rect({ width: 50, height: 50, fill: '#f55', opacity: 0.7 });
+		rect.set('id',++idEle)
+		rect.perPixelTargetFind = true
+		var circle = new fabric.Circle({
+		  radius: 20, fill: 'green', left: 100, top: 100
+		});
+		circle.set('id',++idEle)
+
+		var triangle = new fabric.Triangle({
+		  width: 20, height: 30, fill: 'blue', left: 50, top: 50
+		});
+		triangle.set('id',++idEle)
+
+		var path = new fabric.Path('M 0 0 L 200 100 L 170 200 z');
+		path.set('id',++idEle)
+		path.perPixelTargetFind = true
+		path.set({ left: 120, top: 120 });
+		canvas.add(rect,circle,triangle,path)
+		var linea = new fabric.Path('M 0 0 L 200 100 z');
+		linea.set({ 
+			left: 200, top: 120,fill:'black',stroke: '#333'
+		});
+		linea.perPixelTargetFind = true
+		linea.set('id',++idEle)
+		canvas.add(linea)
+
+		var flecha = new fabric.Path('M121.32,0L44.58,0C36.67,0,29.5,3.22,24.31,8.41\
+		c-5.19,5.19-8.41,12.37-8.41,20.28c0,15.82,12.87,28.69,28.69,28.69c0,0,4.4,\
+		0,7.48,0C36.66,72.78,8.4,101.04,8.4,101.04C2.98,106.45,0,113.66,0,121.32\
+		c0,7.66,2.98,14.87,8.4,20.29l0,0c5.42,5.42,12.62,8.4,20.28,8.4c7.66,0,14.87\
+		-2.98,20.29-8.4c0,0,28.26-28.25,43.66-43.66c0,3.08,0,7.48,0,7.48c0,15.82,\
+		12.87,28.69,28.69,28.69c7.66,0,14.87-2.99,20.29-8.4c5.42-5.42,8.4-12.62,8.4\
+		-20.28l0-76.74c0-7.66-2.98-14.87-8.4-20.29C136.19,2.98,128.98,0,121.32,0z');
+
+		flecha.set('id',++idEle)
+		flecha.perPixelTargetFind = true
+
+		canvas.add(flecha)
+		var img_ = document.getElementById("imagen")
+		var imgInCanvas = new fabric.Image(img_,{
+			left:100,
+			top:100,
+			width:300,
+			height:150,
+			angle:30,
+			opacity:0.55
+		})
+		imgInCanvas.set('id',++idEle)
+		canvas.add(imgInCanvas).renderAll()
+		canvas.renderAll()
+
+		var text = new fabric.Text('hello world', { left: 100, top: 100 });
+		text.set('id',12)
+		text.perPixelTargetFind = true
+		canvas.on('object:rotating',function(e){
+			console.log("rotatng...")
+			console.log(e)
+		})
+		text.set('id',++idEle)
+		canvas.add(text);
+		var textline = 'this is\na multiline\ntext\naligned right!';
+		var alignedRightText = new fabric.Text(textline, {
+  textAlign: 'right'
+		});
+		alignedRightText.perPixelTargetFind = true
+		alignedRightText.set('id',++idEle)
+		canvas.add(alignedRightText).renderAll()
+		/*
+		canvas.on('mouse:down', function(options) {
+		 console.log(options.e.clientX, options.e.clientY);
+		});
+		*/
+
+		canvas.on('mouse:down', function(options) {
+		  if (options.target) {
+		    console.log(options.target);
+		    console.log('an object was clicked! ', options.target.type);
+		    //canvas.remove(options.target)//elimina el elemento del canvas
+		    options.target.set({
+		    	fill:"transparent",
+		    	stroke:"#333"
+		    })
+		  }
+
+		});
+		/*
+		console.log(canvas._objects)//un array con todos los elementos, aqui se podra proceder a buscar a cada uno por sus ID's
+		*/
+		var timer = setTimeout(function(){
+			window.canvas = 	canvas
+			canvas._objects.forEach(function(ele,key){
+				if(ele.id == 4) {
+				 ele.set({fill:"cyan"})
+				 //ele.rotate(120)
+				 console.log(ele)
+				 console.log(ele.getCenterPoint())
+				 //console.log(ele.translateToOriginPoint({x:0,y:0},500,4300)?true:false)
+				 //ele.setScaleY(2)
+				 //ele.setTop(320)
+				 //ele.setLeft(320)
+				canvas.renderAll()
+				}
+				canvas.isDrawingMode = false
+			})
+		},5000)
+
+
+	}(window,undefined)
+	</script>
+</body>
+</html>
