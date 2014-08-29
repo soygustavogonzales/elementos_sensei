@@ -2,12 +2,6 @@
   set_ = paper.set(),
   $caja = $('#caja'),
 	 $btnCrearRect = $('.rectangle'),
-		$rotate = $('.rotate'),
-		$translatex = $('.translatex'),
-		$translatey = $('.translatey'),
-		$ancho = $('.ancho'),
-		$alto = $('.alto'),
-		$escala = $('.escala'),
 		$eliminar = $('.eliminar'),
 		$btnMoverPizarra = $('#change'),
 		$pizarra = $('.pizarra'),
@@ -20,6 +14,7 @@
 		$btnCrearPtos = $('.cPtos'),
 		$settingBox = $('#settingBox'),
 		$fondoPizarra = $('.fondo-pizarra'),
+		$btnElements = $('.box .btn-control'),
 		$body = $('body'),
 		svg_ = document.getElementsByTagName('svg')[0],
 		$svg_ = $(svg_),
@@ -92,26 +87,6 @@
 				break;
 			}
 
-			this.mouseup(function(e){
-    	var x = 0, y = 0;
-    	if(actual._&&actual._['bbox']){
-    		x = actual._['bbox']['cx'], y = actual._['bbox']['cy'];
-    		//console.log(x + " * "+ y)
-    	}
-    	var datos = actual.getBBox(false);
-					//console.log(datos)
-					//console.log(datos.x+" , "+datos.y)
-
-					$alto.val(this.height)
-					$ancho.val(this.width)
-					$translatex.val(((x)?x:datos.x))
-					$translatey.val(((y)?y:datos.y))
-					if(this._&&this._['deg']!=undefined&&this._['sx']!=undefined){
-						$rotate.val(this._['deg'])
-						$escala.val(this._['sx'])
-					}
-    })
-
 			this.hover(function(){
 				this.attr({
 					cursor:"move"
@@ -146,6 +121,7 @@
 				}
 			})
 		});
+
 		svg_.onmousedown = function(e){
 			//sconsole.log(e.x + " , "+e.y)
 			actual = paper.getElementByPoint(e.x,e.y);
@@ -153,8 +129,53 @@
 			mover = !mover
 			console.log(actual)
 		}
+		var jalandoEle = false;
+		var $ele = null;
+		$btnElements.mousedown(function(event) {
+			if(!jalandoEle){
+				console.log("mousedown")
+				jalandoEle = !jalandoEle
+				$ele = $(this)
+				console.log($ele)
+			}
+		});
 
+		var counter = 0
+		svg_.onmousemove = function (e) {
+			jalandoEle&&console.log(counter++)
 
+			if(jalandoEle&&counter>5){
+			console.group("mousemove")
+				console.log("x : %d, y: %d",e.x,e.y)
+			console.groupEnd("mousemove")
+				switch(true){
+					case ($ele.hasClass('rectangle')):
+						crearRectangulo({
+							x:e.x,
+							y:e.y,
+							width:150,
+							height:150,
+							punta:1
+						})
+						break;
+					case ($ele.hasClass('circule')):
+						crearCirculo({
+							x:e.x,
+							y:e.y,
+							r:25
+						})
+						break;
+				}
+				jalandoEle = !jalandoEle
+				counter = 0
+			}
+		}
+		svg_.onmouseup = function (e) {
+			console.group("mouseup")
+				console.log(e.x+' : '+e.y)
+			console.groupEnd("mouseup")
+
+		}
 
 	$pizarra.ubicacion = "atras"
 
@@ -432,98 +453,5 @@
 			//console.log("removiendo...")
 			actual.remove()
 		}
-		$btnCambiarTexto.click(function(event) {
-			actual.attr({
-				text:$parrafo.val()
-			})
-		});
-		$btnCrearTexto.click(function(event) {
-			var texto = $parrafo.val();
-			crearTexto({
-				texto:texto
-			})
-		});
-
-		$btnCrearRaya.click(function(event) {
-			crearRaya({
-			})
-		});
-		$btnCrearCircle.click(function(event) {
-			crearCirculo({
-				x:0,
-				y:0,
-				r:10
-			})
-		});
-		$btnCrearRect.click(function(event) {
-			var ancho = parseInt($('.ancho').val()),
-			alto = parseInt($('.alto').val()),
-			color = $('.color').val();
-			var opt = {
-				container:paper,
-				width:ancho,
-				height:alto,
-				color:"rgba(0,0,0,0)"
-			}
-
-			crearRectangulo(opt)
-		});
-
-		$btnCrearForma.click(function(event) {
-			crearForma()
-		});
-		$eliminar.click(function(event) {
-			eliminarElemento()
-		});
-		$btnCrearPtos.click(function(event) {
-			crearPtos()
-		});
-		function transformar() {
-   var datos = actual.getBBox(false);
-   //console.log(datos.x +" : "+datos.y+ ", deg:"+actual._['deg'])
-   var Xdes = 0, Ydes = 0;
-			var deegre = $rotate.val(),
-			x = parseInt($translatex.val()),
-			y = parseInt($translatey.val()),
-			scale = 1+(parseInt($escala.val())/10);
-   if(actual.data('objectName')&&(actual.data('objectName')=="objAmorfo")){
-	   Xdes = actual._['bbox']['cx']
-	   Ydes = actual._['bbox']['cy']
-	   //console.log("coords: "+Xdes+" , "+Ydes)
-				//actual.transform("t"+(Xdes)+","+(Ydes)+"r"+deegre+"s"+scale)			
-				actual.transform("t"+x+","+y+"r"+deegre+"s"+scale)			
-   }else{
-				actual.transform("t"+(x - Xdes)+","+(y - Ydes)+"r"+deegre+"s"+scale)			
-   }
-		}
-
-		$rotate.change(function(event) {
-			transformar()
-		});
-
-		$translatex.change(function(event) {
-			transformar()
-		});
-
-		$translatey.change(function(event) {
-			transformar()
-		});
-
-		$escala.change(function(event) {
-
-		transformar()
-
-		});
-
-		$alto.change(function(event) {
-			actual.attr({
-				height:$alto.val()
-			})
-		});
 
 
-		$ancho.change(function(event) {
-			actual.attr({
-				width:$ancho.val()
-			})
-		});

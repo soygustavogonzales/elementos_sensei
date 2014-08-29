@@ -5,7 +5,10 @@
 	<title>Document</title>
 	<script src="../../bower_components/raphael/raphael-min.js"></script>
 	<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="fabric.min.js"></script>
 	<script src="raphael.dragAndDrop.js"></script>
+	<!-- 
+	 -->
  <link rel="stylesheet" type="text/css" href="font-awesome-4.1.0/css/font-awesome.min.css"/>
  <link rel="stylesheet" href="dashboard.css">
 	<link rel="stylesheet" href="styles.css">
@@ -18,43 +21,43 @@
 		    <nav role='navigation'>
 		      <ul>
 		        <li>
-		          <a href="#">
+		          <a class="btn-control rectangle" href="#">
 		            <i class="fa fa-text-height fa-fw icon"></i>
 		            Search
 		          </a>
 		        </li>
 		        <li>
-		          <a href="#">
+		          <a class="btn-control raya" href="#">
 		            <i class="fa fa-file-zip-o fa-fw icon"></i>
 		            Library
 		          </a>
 		        </li>
 		        <li>
-		          <a href="#">
+		          <a class="btn-control circule" href="#">
 		            <i class="fa fa-cog fa-spin icon"></i>
 		            Settings
 		          </a>
 		        </li>
 		        <li>
-		          <a href="#">
+		          <a class="btn-control" href="#">
 		            <i class="fa fa-circle-o fa-fw icon"></i>
 		            Search
 		          </a>
 		        </li>
 		        <li>
-		          <a href="#">
+		          <a class="btn-control" href="#">
 		            <i class="fa fa-file-pdf-o fa-fw icon"></i>
 		            Search
 		          </a>
 		        </li>
 		       	<li>
-		          <a href="#">
+		          <a class="btn-control" href="#">
 		            <i class="fa fa-file-word-o fa-fw icon"></i>
 		            Search
 		          </a>
 		        </li>
 		        <li>
-		          <a href="#">
+		          <a class="btn-control" href="#">
 		            <i class="fa fa-file-excel-o fa-fw icon"></i>
 		            Search
 		          </a>
@@ -70,38 +73,12 @@
 			</div>
 <div id="wrap">
 	<div id="caja">
-		<div id="settingBox" class="hide">
-			<label for="ancho">ancho</label>
-			<input class="form-control ancho" type="range" min="5" max="500" name="ancho">
-			<br>
-			<label for="alto">alto</label>
-			<input class="form-control alto" type="range" min="5" max="500" name="alto">
-			<br>
-			<label for="escala">escala</label>
-			<input class="form-control escala" type="range" value="0" min="1" max="100" name="escala">
-			<br>
-			<label for="rotate">rotate</label>
-			<input class="form-control rotate" type="range" value="0" min="0" max="360" name="rotate">
-			<br>
-			<label for="translatex">translatex</label>
-			<input class="form-control translatex" type="range" value="0" min="0" max="1000" name="translatex">
-			<br>
-			<label for="translatey">translatey</label>
-			<input class="form-control translatey" type="range" value="0" min="0" max="560" name="translatey">
-			<br>
-			<label for="color">color</label>
-			<input class="form-control color" type="color" value="#f03737" name="color">
-			<br>
-			<label for="color-borde">borde</label>
-			<input class="form-control color-borde" type="color" value="#f03737" name="color-borde">
-		</div>
-
-			
+		<div id="settingBox" class="hide"></div>
 	</div>
 </div>
 	<div class="fondo-pizarra"></div>
 	<canvas id="blackboard" class="pizarra" width="1200" height="560"></canvas>
-	<div class="controls">
+	<div class="controls hide">
 		<button id="change" class="form-control">Mover pizarra</button>
 		<button class="form-control rectangle">crear rectangulo</button>
 		<button class="form-control raya">crear raya</button>
