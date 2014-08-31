@@ -1,5 +1,6 @@
-	var b = document.querySelector('.box'),
-    d = document.querySelector('.date');
+	var b = document.querySelector('.box-left'),
+    d = document.querySelector('.date'),
+    c = document.querySelector('.box-right');
 
 // clock and date
 function clock(){
@@ -47,16 +48,26 @@ function clock(){
 
 // menu 
 function menu(e){
+
   // left = 20px
-  if (e.clientX < '20'){
+  var umbralWidth = screen.width - 5;
+  if (e.clientX < '5'&& e.clientY > '100' && e.clientY < '550'){
     b.classList.add('show');
     d.classList.add('showClock');
     // show clock
     clock();
   // left = 150px
-  }else if(e.clientX > '100'){
-    b.classList.remove('show');
-    d.classList.remove('showClock');
+  } 
+  else if(e.clientX > '150'){
+      b.classList.remove('show');
+      d.classList.remove('showClock');
+  }
+
+  if(e.clientX > umbralWidth && e.clientY > '100' && e.clientY < '550'){
+    console.log("abrir derecha")
+    c.classList.add('show-right');
+  } else if(e.clientX < (screen.width - 180)){
+    c.classList.remove('show-right');
   }
 }
 // get function on mouse move

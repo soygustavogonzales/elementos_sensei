@@ -5,66 +5,152 @@
 	<title>Document</title>
 	<script src="../../bower_components/raphael/raphael-min.js"></script>
 	<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-	<script src="fabric.min.js"></script>
-	<script src="raphael.dragAndDrop.js"></script>
+	<script src="js/fabric.min.js"></script>
+	<script src="js/raphael.dragAndDrop.js"></script>
 	<!-- 
 	 -->
  <link rel="stylesheet" type="text/css" href="font-awesome-4.1.0/css/font-awesome.min.css"/>
- <link rel="stylesheet" href="dashboard.css">
-	<link rel="stylesheet" href="styles.css">
+ <link rel="stylesheet" href="styles/dashboard.css">
+	<link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-			<div class="box">
-		    <div class="logo">
-		      <img src="avatar.jpg" alt="" />
-		    </div>
-		    <nav role='navigation'>
+			<div class="box box-left">
+						<div class="logo">
+							<i class="fa fa-cube fa-5x"></i>
+						</div>
+						<div id="controls">
+							<div class="input-search">
+								<input class="search" type="text" placeholder="figura">
+								<i class="fa fa-search"></i>
+							</div>
+						</div>
+		    <nav class="btn-navigation" role='navigation'>
 		      <ul>
 		        <li>
-		          <a class="btn-control rectangle" href="#">
-		            <i class="fa fa-text-height fa-fw icon"></i>
-		            Search
-		          </a>
+		          <div class="btn-control rectangle" href="#">
+		         		<img src="img/rectangulo.png" alt="">
+		          </div>
 		        </li>
 		        <li>
-		          <a class="btn-control raya" href="#">
-		            <i class="fa fa-file-zip-o fa-fw icon"></i>
-		            Library
-		          </a>
+		          <div class="btn-control raya" href="#">
+		         		<img src="img/triangulo.png" alt="">
+		          </div>
 		        </li>
 		        <li>
-		          <a class="btn-control circule" href="#">
-		            <i class="fa fa-cog fa-spin icon"></i>
-		            Settings
-		          </a>
+		          <div class="btn-control circule" href="#">
+		         		<img src="img/circulo.png" alt="">
+		          </div>
 		        </li>
 		        <li>
-		          <a class="btn-control" href="#">
-		            <i class="fa fa-circle-o fa-fw icon"></i>
-		            Search
-		          </a>
+		          <div class="btn-control" href="#">
+		         		<img src="img/circulo.png" alt="">
+		          </div>
 		        </li>
 		        <li>
-		          <a class="btn-control" href="#">
-		            <i class="fa fa-file-pdf-o fa-fw icon"></i>
-		            Search
-		          </a>
+		          <div class="btn-control" href="#">
+		         		<img src="img/circulo.png" alt="">
+		          </div>
 		        </li>
 		       	<li>
-		          <a class="btn-control" href="#">
-		            <i class="fa fa-file-word-o fa-fw icon"></i>
-		            Search
-		          </a>
+		          <div class="btn-control" href="#">
+		         		<img src="img/circulo.png" alt="">
+		          </div>
 		        </li>
 		        <li>
-		          <a class="btn-control" href="#">
-		            <i class="fa fa-file-excel-o fa-fw icon"></i>
-		            Search
-		          </a>
+		          <div class="btn-control" href="#">
+		         		<img src="img/circulo.png" alt="">
+		          </div>
+		        </li>
+		        <li>
+		          <div class="btn-control" href="#">
+		         		<img src="img/circulo.png" alt="">
+		          </div>
+		        </li>
+		        <li>
+		          <div class="btn-control" href="#">
+		         		<img src="img/circulo.png" alt="">
+		          </div>
 		        </li>
 		      </ul>
 		    </nav>   
 		 </div><!-- ./ box -->
+		 <div class="box box-right">
+						<div class="logo">
+							<i class="fa fa-cubes fa-5x"></i><!-- folder-open-o -->
+						</div>
+						<div id="controls">
+							<div class="input-search">
+								<input class="search" type="text" placeholder="archivo">
+								<i class="fa fa-search"></i>
+							</div>
+						</div>
+		    <nav class="btn-navigation" role='navigation'>
+		      <ul>
+		        <li>
+		          <div class="btn-control rectangle" href="#">
+		         		<img src="img/rectangulo.png" alt="">
+		          </div>
+		        </li>
+		        <li>
+		          <div class="btn-control raya" href="#">
+		         		<img src="img/triangulo.png" alt="">
+		          </div>
+		        </li>
+		        <li>
+		          <div class="btn-control circule" href="#">
+		         		<img src="img/circulo.png" alt="">
+		          </div>
+		        </li>
+		        <li>
+		          <div class="btn-control" href="#">
+		         		<img src="img/circulo.png" alt="">
+		          </div>
+		        </li>
+		        <li>
+		          <div class="btn-control" href="#">
+		         		<img src="img/circulo.png" alt="">
+		          </div>
+		        </li>
+		       	<li>
+		          <div class="btn-control" href="#">
+		         		<img src="img/circulo.png" alt="">
+		          </div>
+		        </li>
+		        <li>
+		          <div class="btn-control" href="#">
+		         		<img src="img/circulo.png" alt="">
+		          </div>
+		        </li>
+		        <li>
+		          <div class="btn-control" href="#">
+		         		<img src="img/circulo.png" alt="">
+		          </div>
+		        </li>
+		        <li>
+		          <div class="btn-control" href="#">
+		         		<img src="img/circulo.png" alt="">
+		          </div>
+		        </li>
+		      </ul>
+		    </nav>   
+		 </div><!-- ./ box -->
+		 <div id="box-chat">
+		 	<div class="title">
+		 		<marquee behavior="" direction="">hola me oyes?</marquee>
+		 	</div>
+		 	<div class="buzon">
+		 		<ul class="messages">
+		 			<li class="buble">hola me oyes?</li>
+		 			<li class="buble">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, dolorum?</li>
+		 			<li class="buble">Lorem ipsum dolor sit amet, consectetur ?</li>
+		 			<li class="buble">Lorem ipsum dolor sit amet,  Voluptatem, dolorum?</li>
+		 			<li class="buble">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, neque.</li>
+		 		</ul>
+		 	</div>
+		 	<div class="input-text">
+		 		<input type="text" placeholder="tu mensaje">
+		 	</div>
+		 </div>
 			<!-- date -->
 			<div class="date"> </div>
 			<div class="esquina esquina-arriba"></div>
@@ -91,8 +177,27 @@
 		<textarea class="parrafo" name="pararro" id="texto" cols="10" rows="3"></textarea>
 		<br>
 	</div>
-	<script src="script.js"></script>
-	<script src="pizarra.js"></script>
-	<script src="dashboard.js"></script>
+	<script src="js/script.js"></script>
+	<script src="js/pizarra.js"></script>
+	<script src="js/dashboard.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery.slimscroll.js"></script>
+	<script>
+			$('.box nav').slimScroll({
+				distance:'5px',
+				height:'37.4em',
+				width:'12em',
+				railVisible: true,
+    railOpacity: 0.1
+			})
+			$('.buzon').slimScroll({
+				distance:'5px',
+				height:'17.6em',
+				width:'100%',
+				railVisible: true,
+    railOpacity: 0.1
+			})
+			
+	</script>
 </body>
 </html>

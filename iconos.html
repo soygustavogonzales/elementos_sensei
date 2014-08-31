@@ -80,21 +80,32 @@
 		 height: 30,
 		 fill: 'transparent',
 		 stroke:'#333',
-		 strokeWidth:2
+		 strokeWidth:1
 		});
 		rect.set('id',++idEle)
 		//rect.perPixelTargetFind = true
 		canvas.add(rect)
 		var circle = new fabric.Circle({
-		  radius: 20, fill: 'green', left: 100, top: 100
+		  radius: 20,
+		  fill: 'transparent',
+		  left: 0,
+		  top: 0,
+			 stroke:'#333',
+			 strokeWidth:1		  
 		});
 		circle.set('id',++idEle)
-
+		canvasD.add(circle)
 		var triangle = new fabric.Triangle({
-		  width: 20, height: 30, fill: 'blue', left: 50, top: 50
+		  width: 30,
+		  height: 30,
+		  fill: 'transparent',
+		  left: 0,
+		  top: 0,
+		  stroke:'#333',
+			 strokeWidth:1		  
 		});
 		triangle.set('id',++idEle)
-
+		canvasE.add(triangle)
 		var path = new fabric.Path('M 0 0 L 200 100 L 170 200 z');
 		path.set('id',++idEle)
 		path.perPixelTargetFind = true

@@ -144,7 +144,7 @@
 		svg_.onmousemove = function (e) {
 			jalandoEle&&console.log(counter++)
 
-			if(jalandoEle&&counter>5){
+			if(jalandoEle&&counter>1){
 			console.group("mousemove")
 				console.log("x : %d, y: %d",e.x,e.y)
 			console.groupEnd("mousemove")
@@ -153,8 +153,8 @@
 						crearRectangulo({
 							x:e.x,
 							y:e.y,
-							width:150,
-							height:150,
+							width:100,
+							height:50,
 							punta:1
 						})
 						break;
