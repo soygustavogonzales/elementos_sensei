@@ -139,14 +139,17 @@
 		 		<marquee behavior="" direction="">hola me oyes?</marquee>
 		 	</div>
 		 	<div class="buzon">
-		 		<ul class="messages">
-		 			<li class="buble">hola me oyes?</li>
-		 			<li class="buble">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, dolorum?</li>
-		 			<li class="buble">Lorem ipsum dolor sit amet, consectetur ?</li>
-		 			<li class="buble">Lorem ipsum dolor sit amet,  Voluptatem, dolorum?</li>
-		 			<li class="buble">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, neque.</li>
-		 		</ul>
+		 		<div class="listMsjs">
+			 		<ul class="messages">
+			 			<li class="buble">hola me oyes?</li>
+			 			<li class="buble">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, dolorum?</li>
+			 			<li class="buble">Lorem ipsum dolor sit amet, consectetur ?</li>
+			 			<li class="buble">Lorem ipsum dolor sit amet,  Voluptatem, dolorum?</li>
+			 			<li class="buble">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, neque.</li>
+			 		</ul>
+		 		</div>
 		 	</div>
+		 			
 		 	<div class="input-text">
 		 		<input type="text" placeholder="tu mensaje">
 		 	</div>
@@ -183,18 +186,26 @@
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery.slimscroll.js"></script>
 	<script>
-			$('.box nav').slimScroll({
+			$('.box-left nav').slimScroll({
 				distance:'5px',
 				height:'37.4em',
 				width:'12em',
 				railVisible: true,
     railOpacity: 0.1
 			})
-			$('.buzon').slimScroll({
+			$('.box-right nav').slimScroll({
 				distance:'5px',
-				height:'17.6em',
-				width:'100%',
+				height:'37.4em',
+				width:'12em',
 				railVisible: true,
+    railOpacity: 0.1,
+    position:'left'
+			})
+			$('.listMsjs').slimScroll({
+				distance:'5px',
+				height:'16.8em',
+				width:'100%',
+				railVisible: false,
     railOpacity: 0.1
 			})
 			
