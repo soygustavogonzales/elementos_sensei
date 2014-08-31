@@ -176,6 +176,7 @@ h1,.info > h1 {
 #box-chat .input-text {
   height: 2.2em;
   width: 100%;
+  display: none;
 }
 #box-chat .input-text input {
   padding: .2em .4em;
@@ -191,6 +192,10 @@ h1,.info > h1 {
   bottom: 0em;
   -webkit-transition: bottom .25s ease-in-out;
   transition: bottom .25s ease-in-out;
+  
+}
+#box-chat:hover .input-text{
+  display: block;
 }
 
 ul .buble {
