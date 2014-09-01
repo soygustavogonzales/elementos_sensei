@@ -2,3 +2,8 @@
 .log
 .debug
 .[oa]
+#Para no seguir a los .bkp. que son archivos copias(backups apocrifos) 
+# de archivos que pertenecen  a otra rama 
+*.bkp.*
+
+
