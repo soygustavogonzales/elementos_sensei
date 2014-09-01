@@ -5,9 +5,9 @@
 	<title>Document</title>
 	<script src="../../bower_components/raphael/raphael-min.js"></script>
 	<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-	<script src="js/fabric.min.js"></script>
-	<script src="js/raphael.dragAndDrop.js"></script>
+	<script src="js/fabric.js"></script>
 	<!-- 
+	<script src="js/raphael.dragAndDrop.js"></script>
 	 -->
  <link rel="stylesheet" type="text/css" href="font-awesome-4.1.0/css/font-awesome.min.css"/>
  <link rel="stylesheet" href="styles/dashboard.css">
@@ -27,48 +27,39 @@
 		    <nav class="btn-navigation" role='navigation'>
 		      <ul>
 		        <li>
-		          <div class="btn-control rectangle" href="#">
-		         		<img src="img/rectangulo.png" alt="">
+		          <div class="btn-control rectangle" name="rectangle">
 		          </div>
 		        </li>
 		        <li>
-		          <div class="btn-control raya" href="#">
-		         		<img src="img/triangulo.png" alt="">
+		          <div class="btn-control circle" name="circle" >
 		          </div>
 		        </li>
 		        <li>
-		          <div class="btn-control circule" href="#">
-		         		<img src="img/circulo.png" alt="">
+		          <div class="btn-control triangle" name="triangle" >
 		          </div>
 		        </li>
 		        <li>
-		          <div class="btn-control" href="#">
-		         		<img src="img/circulo.png" alt="">
+		          <div class="btn-control" >
 		          </div>
 		        </li>
 		        <li>
-		          <div class="btn-control" href="#">
-		         		<img src="img/circulo.png" alt="">
+		          <div class="btn-control" >
 		          </div>
 		        </li>
 		       	<li>
-		          <div class="btn-control" href="#">
-		         		<img src="img/circulo.png" alt="">
+		          <div class="btn-control" >
 		          </div>
 		        </li>
 		        <li>
-		          <div class="btn-control" href="#">
-		         		<img src="img/circulo.png" alt="">
+		          <div class="btn-control" >
 		          </div>
 		        </li>
 		        <li>
-		          <div class="btn-control" href="#">
-		         		<img src="img/circulo.png" alt="">
+		          <div class="btn-control" >
 		          </div>
 		        </li>
 		        <li>
-		          <div class="btn-control" href="#">
-		         		<img src="img/circulo.png" alt="">
+		          <div class="btn-control" >
 		          </div>
 		        </li>
 		      </ul>
@@ -87,48 +78,39 @@
 		    <nav class="btn-navigation" role='navigation'>
 		      <ul>
 		        <li>
-		          <div class="btn-control rectangle" href="#">
-		         		<img src="img/rectangulo.png" alt="">
+		          <div class="btn-control rectangle" >
 		          </div>
 		        </li>
 		        <li>
-		          <div class="btn-control raya" href="#">
-		         		<img src="img/triangulo.png" alt="">
+		          <div class="btn-control raya" >
 		          </div>
 		        </li>
 		        <li>
-		          <div class="btn-control circule" href="#">
-		         		<img src="img/circulo.png" alt="">
+		          <div class="btn-control circule" >
 		          </div>
 		        </li>
 		        <li>
-		          <div class="btn-control" href="#">
-		         		<img src="img/circulo.png" alt="">
+		          <div class="btn-control" >
 		          </div>
 		        </li>
 		        <li>
-		          <div class="btn-control" href="#">
-		         		<img src="img/circulo.png" alt="">
+		          <div class="btn-control" >
 		          </div>
 		        </li>
 		       	<li>
-		          <div class="btn-control" href="#">
-		         		<img src="img/circulo.png" alt="">
+		          <div class="btn-control" >
 		          </div>
 		        </li>
 		        <li>
-		          <div class="btn-control" href="#">
-		         		<img src="img/circulo.png" alt="">
+		          <div class="btn-control" >
 		          </div>
 		        </li>
 		        <li>
-		          <div class="btn-control" href="#">
-		         		<img src="img/circulo.png" alt="">
+		          <div class="btn-control" >
 		          </div>
 		        </li>
 		        <li>
-		          <div class="btn-control" href="#">
-		         		<img src="img/circulo.png" alt="">
+		          <div class="btn-control" >
 		          </div>
 		        </li>
 		      </ul>
@@ -162,24 +144,13 @@
 			</div>
 <div id="wrap">
 	<div id="caja">
+		<div class="fondo-pizarra"></div>
 		<div id="settingBox" class="hide"></div>
+		<canvas id="blackboard" class="pizarra" width="1200" height="560"></canvas>
+		<canvas id="objetos" class="" width="1200" height="560"></canvas>
 	</div>
 </div>
-	<div class="fondo-pizarra"></div>
-	<canvas id="blackboard" class="pizarra" width="1200" height="560"></canvas>
-	<div class="controls hide">
-		<button id="change" class="form-control">Mover pizarra</button>
-		<button class="form-control rectangle">crear rectangulo</button>
-		<button class="form-control raya">crear raya</button>
-		<button class="form-control circule">crear circulo</button>
-		<button class="form-control texto">crear texto</button>
-		<button class="form-control eliminar">eliminar</button>
-		<button class="form-control ctexto">cambiar texto</button>
-		<button class="form-control cforma">crear forma</button>
-		<button class="form-control cPtos">crear Ptos</button>
-		<textarea class="parrafo" name="pararro" id="texto" cols="10" rows="3"></textarea>
-		<br>
-	</div>
+
 	<script src="js/script.js"></script>
 	<script src="js/pizarra.js"></script>
 	<script src="js/dashboard.js"></script>
