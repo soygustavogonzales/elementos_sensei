@@ -57,6 +57,9 @@
     dctrl.prevy = mousey;
   }
 
+  function clearPixel(snapshot) {
+    ctx.clearRect(parseInt(coords[0]) * pixSize, parseInt(coords[1]) * pixSize, pixSize, pixSize);
+  };
   function canvas_mousedown(ev) {
     console.log("mouse down")
 

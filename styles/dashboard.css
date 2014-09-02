@@ -243,25 +243,30 @@ ul .buble:after {
   z-index: 5
 }
 .esquina-bajo{
-  position: absolute;
   bottom: 0em;
-  right: 0em;
+  left: 0em;
+  padding: .8em 1.8em 0em .8em;
+  border-radius: 0% 100% 0% 0%;
+}
+.esquina-arriba{
+  top: 0em;
+  left: 0em;
+  padding: .8em 1.9em 2em .8em;
+  border-radius: 0% 0% 100% 0%;
+}
+.esquina {
+  position: absolute;
   width: 3em;
-  height: 3em;
-  padding: .9em 0em .5em .6em;
   line-height: 1.8em;
+  height: 3em;
+  background: rgba(21,217,118,.9);
   text-align: center;
-  background: rgba(111,223,29,.6);
-  color: #eee;
-  border-radius: 100% 0% 0% 0%;
   opacity: .7;
   transition:all .25s;
-  -webkit-animation: esquinaAction 1s infinite;
-  -webkit-animation-timing-function: ease-out;
-  animation: esquinaAction 1s infinite;
+  color: #eee;
   z-index: 5
 }
-.esquina-bajo:hover{
+.esquina:hover{
   zoom: 1.1;
   opacity: .9;
   cursor: pointer;

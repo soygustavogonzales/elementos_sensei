@@ -8,7 +8,10 @@
 	$body = $(document.body),
 	hScreen = $body.height() ||screen.height - (24 + 61),//683
 	$canvas = $('.pizarra'),
+	$box =$('.box'), 
 	$caja = $('#caja'),
+	$pencil = $('.pencil'),
+	$eraser = $('.eraser'),
 	$btnElements = $('.box-left .btn-control'),
 	whiteboard = new fabric.Canvas('objetos',{
 		backgroundColor:'transparent',
@@ -16,8 +19,13 @@
 		height:hScreen
 	})
 	; 
+	$container = $('#objetos').parent()
+	$container.css({
+		position:'absolute'
+	})
 	$canvas[0].width = wScreen
 	$canvas[0].height = hScreen
+	$canvas.activate = false
 	;
 	var $tempCanvas = $(document.createElement('canvas'));
 	$tempCanvas.attr('id','tempCanvas')
@@ -35,7 +43,27 @@
 		'z-index':6
 	})
 
+	function enabledPencilWrite () {
+		if(!$canvas.activate){//si esta desactivado
+			$canvas.css({
+				'z-index':4
+			})
+		}
+		$canvas.activate = true
+	}
 
+	function disabledPencilWrite () {
+		if($canvas.activate){
+			$canvas.css({
+				'z-index':2
+			})
+		}
+		$canvas.activate = false
+	}
+
+	$pencil.click(enabledPencilWrite)
+	$box.mouseleave(disabledPencilWrite)
+	
 	function showPhantomEle (nomEle) {
 		switch(nomEle) {
 			case ('rectangle'):
