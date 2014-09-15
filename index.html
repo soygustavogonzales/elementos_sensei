@@ -6,11 +6,9 @@
 	<script src="../../bower_components/raphael/raphael-min.js"></script>
 	<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="js/fabric.js"></script>
-	<!-- 
-	<script src="js/raphael.dragAndDrop.js"></script>
-	 -->
  <link rel="stylesheet" type="text/css" href="font-awesome-4.1.0/css/font-awesome.min.css"/>
  <link rel="stylesheet" href="styles/dashboard.css">
+ <link rel="stylesheet" href="styles/dashboard2.css">
 	<link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
@@ -31,7 +29,7 @@
 		          </div>
 		        </li>
 		        <li>
-		          <div class="btn-control circle" name="circle" >
+		          <div class="btn-control circule" name="circle" >
 		          </div>
 		        </li>
 		        <li>
@@ -138,12 +136,60 @@
 		 </div>
 			<!-- date -->
 			<div class="date"> </div>
-			<div class="esquina esquina-arriba eraser">
-				<i class="fa fa-eraser fa-ix"></i>
-			</div>
-			<div class="esquina esquina-bajo pencil">
-			  <i class="fa fa-pencil fa-1x"></i>
-			</div>
+			  <div class='circle colores hide pencil'>
+      <div><span style="background:#DB5B5B;"></span></div>
+      <div><span style="background:#F0820C;"></span></div>
+      <div><span style="background:#B4267C;"></span></div>
+      <div><span style="background:#AB3EE0;"></span></div>
+      <div><span style="background:#724AEA;"></span></div>
+      <div><span style="background:#DB5B5B;"></span></div>
+      <div><span style="background:#DB3333;"></span></div>
+      <div><span style="background:rgba(36,56,76,.9);"></span></div>
+      <div><span style="background:rgba(36,45,86,.9);"></span></div>
+      <div><span style="background:rgba(35,25,16,.9);"></span></div>
+      <div><span style="background:rgba(10,15,16,.9);"></span></div>
+      <div><span style="background:rgba(12,18,116,.9);"></span></div>
+      <div><span style="background:#433B49;"></span></div>
+  </div>
+
+  <div class='circle tamano hide'>
+    <div><span style="width:7px;height:7px;"></span></div>
+    <div><span style="width:11px;height:11px;"></span></div>
+    <div><span style="width:20px;height:20px;"></span></div>
+    <div><span style="width:35px;height:35px;"></span></div>
+    <div><span style="width:50px;height:50px;"></span></div>
+    <div><span style="width:55px;height:55px;"></span></div>
+    <div><span style="width:60px;height:60px;"></span></div>
+    <div><span style="width:65px;height:65px;"></span></div>
+    <div><span style="width:68px;height:68px;"></span></div>
+    <div><span style="width:70px;height:70px;"></span></div>
+    <div><span style="width:72px;height:72px;"></span></div>
+    <div><span style="width:79px;height:79px;"></span></div>
+    <div><span style="width:85px;height:85px;"></span></div>
+    <div><span style="width:92px;height:92px;"></span></div>
+  </div>
+  <div class="circle eraser hide">
+    <div><span style="width:7px;height:7px;"></span></div>
+    <div><span style="width:20px;height:20px;"></span></div>
+    <div><span style="width:30px;height:30px;"></span></div>
+    <div><span style="width:40px;height:40px;"></span></div>
+    <div><span style="width:45px;height:45px;"></span></div>
+    <div><span style="width:7px;height:7px;"></span></div>
+    <div><span style="width:20px;height:20px;"></span></div>
+    <div><span style="width:30px;height:30px;"></span></div>
+    <div><span style="width:40px;height:40px;"></span></div>
+    <div><span style="width:45px;height:45px;"></span></div>
+    <div><span style="width:55px;height:55px;"></span></div>
+    <div><span style="width:58px;height:58px;"></span></div>
+    <div><span style="width:62px;height:62px;"></span></div>
+  </div>
+    <article class="esquina-btn colores-btn">
+				  <i class="fa fa-pencil fa-1x"></i>
+    </article>
+    <article class="esquina-btn eraser-btn">
+					<i class="fa fa-eraser fa-ix"></i>
+    </article>
+
 <div id="wrap">
 	<div id="caja">
 		<div class="fondo-pizarra"></div>
