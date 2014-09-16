@@ -10,6 +10,7 @@
  <link rel="stylesheet" href="styles/dashboard.css">
  <link rel="stylesheet" href="styles/dashboard2.css">
 	<link rel="stylesheet" href="styles/styles.css">
+	<link href="styles/jquery.mCustomScrollbar.css" rel="stylesheet" />
 </head>
 <body>
 			<div class="box box-left">
@@ -22,8 +23,9 @@
 								<i class="fa fa-search"></i>
 							</div>
 						</div>
-		    <nav class="btn-navigation" role='navigation'>
-		      <ul>
+		    <nav class="" role='navigation'>
+		    	<div class="btn-navigation">
+		      <ul class="btn-left">
 		        <li>
 		          <div class="btn-control rectangle" name="rectangle">
 		          </div>
@@ -44,7 +46,7 @@
 		          <div class="btn-control" >
 		          </div>
 		        </li>
-		       	<li>
+		        <li>
 		          <div class="btn-control" >
 		          </div>
 		        </li>
@@ -61,6 +63,45 @@
 		          </div>
 		        </li>
 		      </ul>
+		      <ul class="btn-right">
+		        <li>
+		          <div class="btn-control" >
+		          </div>
+		        </li>
+		       	<li>
+		          <div class="btn-control" >
+		          </div>
+		        </li>
+		        <li>
+		          <div class="btn-control" >
+		          </div>
+		        </li>
+		        <li>
+		          <div class="btn-control" >
+		          </div>
+		        </li>
+		        <li>
+		          <div class="btn-control" >
+		          </div>
+		        </li>
+		        <li>
+		          <div class="btn-control" >
+		          </div>
+		        </li>
+		        <li>
+		          <div class="btn-control" >
+		          </div>
+		        </li>
+		     		 <li>
+		          <div class="btn-control" >
+		          </div>
+		        </li>
+		        <li>
+		          <div class="btn-control" >
+		          </div>
+		        </li> 	
+		      </ul>
+		    	</div>
 		    </nav>   
 		 </div><!-- ./ box -->
 		 <div class="box box-right">
@@ -204,13 +245,22 @@
 	<script src="js/dashboard.js"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery.slimscroll.js"></script>
+	<script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+
 	<script>
+		/*
 			$('.box-left nav').slimScroll({
 				distance:'5px',
-				height:'37.4em',
-				width:'12em',
+				height:'auto',
+				width:'100%',
 				railVisible: true,
     railOpacity: 0.1
+			})
+		*/
+			$('.box-left nav').mCustomScrollbar({
+					autoHideScrollbar:true,
+					scrollInertia:600
+					//autoDraggerLength:false
 			})
 			$('.box-right nav').slimScroll({
 				distance:'5px',
@@ -220,6 +270,7 @@
     railOpacity: 0.1,
     position:'left'
 			})
+
 			$('.listMsjs').slimScroll({
 				distance:'5px',
 				height:'16.8em',

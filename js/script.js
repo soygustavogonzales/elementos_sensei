@@ -45,7 +45,7 @@
   });
   */
   //whiteboard.loadFromJSON(cad)
-  whiteboard.loadFromDatalessJSON(cad2_)
+  //whiteboard.loadFromDatalessJSON(cad2_)
 	$container = $('#objetos').parent()
 	$container.css({
 		position:'absolute'
