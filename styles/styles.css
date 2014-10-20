@@ -1,7 +1,20 @@
+/* latin */
+@font-face {
+  font-family: 'Open Sans Condensed';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Cond Light'), local('OpenSans-CondensedLight'), url(../fonts/openSansCondensed.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
 	*{
 		margin: 0;
 		border:0;
 		padding: 0;
+	}
+	html{
+		position: relative;
+		height: 100%;
 	}
 	body{
 		position: relative;
@@ -9,10 +22,11 @@
 		color: black;
 		width: 100%;
 		height: 100%;
+		font-family: 'Open Sans Condensed', sans-serif;
 	}
+
 		#caja{
 			position: absolute;
-			//z-index: 3;
 			box-shadow: inset 0 0 2em;
 			width: 100%;
 			height: 100%;	
@@ -43,7 +57,7 @@
 			height: 25em;
 			background: rgba(46,202,41,.7);
 			font-size: 1em;
-			font-family: sans-serif;
+			font-family: 'Open Sans Condensed', sans-serif;
 			text-align: left;
 			color:#333;
 			opacity: .6;
